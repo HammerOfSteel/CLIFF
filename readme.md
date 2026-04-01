@@ -1,186 +1,248 @@
-# CLIFF – Läsglädje för hela familjen
+# CLIFF – Läsglädje genom Storytelling
 
 ## 🎯 Vision
-CLIFF är en digital plattform som gör läsning lika beroendeframkallande som sociala medier – men med substans. Vi förvandlar icke-läsare till bokälskare genom att kombinera spelmekanik, vacker design och storytelling i en upplevelse som fungerar för barn, tonåringar och hela familjen.
+CLIFF är en digital plattform som gör läsning lika beroendeframkallande som TikTok – men med substans. Vi förvandlar tonåringar som inte läser böcker till berättelsekonsumenter och skapare genom korta, intensiva mikroberättelser som känns.
+
+**Varför tonåringar?** Social media exploderar i denna åldersgrupp (13-19 år), men de läser allt mindre. CLIFF möter dem där de är – på skärmen – men med meningsfullt innehåll istället för endless scrolling.
 
 ---
 
-## 👥 Målgrupper & Upplevelser
+## 👥 Målgrupp: Tonåringar & Unga Vuxna (13–22 år)
 
-### CLIFF Kids (5–12 år)
-**Löfte:** *"Läsning känns som magi"*
+### Primär målgrupp: 13–17 år
+Tonåringar som:
+- Använder TikTok, Instagram, Snapchat dagligen
+- Inte läst en bok frivilligt på flera år
+- Älskar storytelling (serier, filmer, podcasts)
+- Söker identitet och igenkänning
+- Har splittrad uppmärksamhet (3-5 minuter max)
 
-**Innehåll:**
-- **Digitala bilderböcker** med interaktiva animationer och ljudberättelser
-- Vackra sidvändningar och karaktärsanimationer
-- **AR-förstärkta fysiska böcker** (hybridbibliotek) som tar berättelsen från sidan till skärmen
-- Tema-baserat innehåll: Äventyr, djur, sagor, vetenskap för barn
-
-**Discovery:**
-- **Story Trails** – böcker leder till liknande berättelser och äventyr
-- Automatisk anpassning efter ålder och läsnivå
-- TikTok-inspirerat gränssnitt med vertikalt swipe för att förhandsgranska böcker
-
-**Engagemang:**
-- **Lässtreaks & Achievement Badges** – bygg vanor genom daglig läsning
-- Personliga mål och milstolpar utan social jämförelse
-- Inget kommentarsfält – fokus på läsupplevelsen
-
-### CLIFF Teens (13–17 år)
-**Löfte:** *"Berättelser som känns"*
-
-**Innehåll:**
-- Mikroberättelser (3–5 min läsning) i serieformat med cliffhangers
-- Episodiskt innehåll för att bygga spänning och läsvana
-- Fokus på känslor, identitet och igenkänning
-- Användargenerat innehåll – skriv och publicera egna stories
-
-**Discovery:**
-- Story trails med personliga rekommendationer
-- Genre-baserad navigering (romance, thriller, sci-fi, fantasy, verkliga berättelser)
-
-**Engagemang:**
-- Anonyma reaktioner och emojis (inte kommentarer för yngre gruppen)
-- Lässtreaks och community-challenges
-- Möjlighet att utvecklas som skribent och få feedback
-
-### CLIFF Community (15–25 år)
-**Löfte:** *"Ditt community för storytelling"*
-
-**Ursprungligt koncept – nu del av större ekosystem:**
-- Intensiva mikroberättelser med cliffhangers
-- Anonyma reaktioner och kommentarer i realtid
-- **Skapa & bli läst** – publicera egna episodiska stories
-- Community-feedback och upptäckt
-- Väg till att bli publicerad författare
+### Sekundär målgrupp: 18–22 år
+Unga vuxna som:
+- Vill utvecklas som skribenter
+- Letar efter kreativa uttryck
+- Söker community kring berättande
+- Vill bli upptäckta och få feedback från läsare
 
 ---
 
-## 🏗️ Plattformsfunktioner
+## 📖 Vad är CLIFF?
 
-### Familjebaserade Konton
-- **Föräldrakonto** med flera barnprofiler
-- Individuell ålderanpassning per barn
-- Separata innehållsbibliotek baserat på ålder och intressen
-- Säker miljö utan exponering för olämpligt innehåll
+### Mikroberättelser med Cliffhangers
+- **Korta episoder:** 3–5 minuter läsning per del
+- **Serieformat:** Varje story släpps episodiskt (som en serie på Netflix)
+- **Genrer som funkar:** Romance, thriller, sci-fi, fantasy, verkliga berättelser, LGBTQ+, mental hälsa
+- **Cliffhangers:** Varje del slutar så du måste komma tillbaka
+- **Visuellt berättande:** Text med bilder, GIFs, stiliserad formatering
 
-### Föräldrainstrumentpanel
-- **Läsinsikter**: tid, antal böcker, progress
-- Visuell översikt av barnets läsvanor och favoriter
-- Inga integritetsintrång – föräldern ser vad som läses, inte reaktioner/känslor
-- Notiser vid milstolpar och achievements
+### TikTok för Läsning
+- **Vertical swipe discovery:** Scrolla genom story-previews vertikalt
+- **Autoplay previews:** Första stycket animeras in med musik/ambient ljud
+- **Quick engagement:** Typ "👁 2.3K läst detta", "🔥 Trending", "Ny episod idag"
+- **Personlig feed:** Algoritmen lär sig vad du gillar (som FYP på TikTok)
 
-### Hybridbibliotek
-- **Primärt digitalt**: majoriteten är app-nativa berättelser och böcker
-- **AR-integration**: möjlighet att scanna fysiska böcker för förstärkt upplevelse
-- Story trails som kopplar samman fysiska och digitala verk
-- Framtida partnerskap med förlag för AR-lager på befintliga böcker
+### Skapa & Bli Läst
+- **Enkel editor:** Skriv direkt i appen med formatering och bildinsättning
+- **Publicera episodiskt:** Släpp en del i taget för att bygga spänning
+- **Feedback från läsare:** Anonyma reaktioner (❤️ 😭 😱 🔥 💀) och lässtatistik
+- **Upptäckts-möjlighet:** Trending-sektion, featured stories, följare-system
+- **Potential:** Framgångsrika författare kan bli publicerade eller tjäna pengar (framtida feature)
 
-### Gamification & Progression
-- **Reading Streaks** – uppmuntra daglig läsning
-- **Achievement Badges** – milstolpar som "Läst 10 böcker", "7-dagars streak", "Utforskare" (provat 5 genrer)
-- **Progress Tracking** – visuell representation av läsresa
-- Personlig utveckling utan social press
+---
 
-### TikTok-Inspirerat Gränssnitt
-- Vertikalt swipe för att upptäcka böcker
-- Autoplay av förhandsvisningar (första sidan animerad)
-- Snabb inladdning och mjuka övergångar
-- Minimalistisk design som fokuserar på innehållet
+## 🏗️ Plattformsfunktioner (MVP)
+
+### Discovery Feed (TikTok-Style)
+- **Vertical swipe:** Scrolla genom story-previews
+- **Quick info:** Genre, läslängd, reads, senaste episod
+- **One-tap to read:** Direkt in i berättelsen
+- **Personlig algoritm:** Lär sig dina preferenser
+
+### Story Reader
+- **Immersiv läsning:** Fullskärm, distraktionsfritt
+- **Episodnavigering:** Enkel förflyttning mellan delar
+- **Progress tracking:** Se var du är i serien
+- **Offline mode:** Ladda ner för att läsa utan internet
+- **Visuella element:** Bilder, formatering, stämningssättande design
+
+### Creator Studio
+- **Story Editor:** 
+  - Skriv med markdown-liknande formatering
+  - Lägg till bilder och GIFs
+  - Preview innan publicering
+  - Spara utkast
+  
+- **Episode Manager:**
+  - Publicera episodiskt (en del i taget)
+  - Schemalägg releases
+  - Se stats per episod
+  
+- **Analytics:**
+  - Antal läsare per episod
+  - Completion rate (hur många läser till slut)
+  - Reaktioner per del
+  - Följare och tillväxt
+
+### Community Features
+- **Reaktioner:** Emoji-baserad feedback (❤️ 😭 😱 🔥 💀 🤯)
+- **Följare-system:** Följ dina favoritförfattare
+- **Trending & Featured:** Upptäck populära och kvalitetsstories
+- **Sparade stories:** Bookmarks för att läsa senare
+- **Reading lists:** Skapa egna samlingar
+
+### Gamification (Light)
+- **Reading streaks:** Bygg vanor genom daglig läsning
+- **Profile badges:** "5 böcker lästa", "Första story publicerad", "100 readers"
+- **Progress visualization:** Se din läsresa
+
+---
+
+## 💰 Intäktsmodell: Subscription Tiers (Audible-Style)
+
+### Free Tier
+**Vad det ger:**
+- Tillgång till 20% av biblioteket (kurerat urval)
+- Läs 3 episoder per dag (cap)
+- Reaktioner och grundläggande interaction
+- Skapa och publicera stories (max 1 aktiv serie)
+- Basic analytics för creators
+
+**Begränsningar:**
+- Ingen offline-läsning
+- Väntetid mellan episoder (24h) för vissa populära serier
+- Ads mellan episoder (diskret, inte intrusive)
+
+### CLIFF Reader – 69 kr/mån
+**Allt i Free +**
+- Obegränsat läsande av hela biblioteket
+- Ingen episod-cap eller väntetid
+- Offline-läsning (ladda ner stories)
+- Ingen reklam
+- Early access till nya featured stories
+- Custom reading themes (dark mode, fonts, färger)
+
+### CLIFF Creator – 129 kr/mån
+**Allt i Reader +**
+- Publicera obegränsat antal serier samtidigt
+- Advanced analytics dashboard
+  - Demografisk data om läsare
+  - Retention graphs
+  - A/B testing av covers och beskrivningar
+- Featured consideration (prioritet i algoritmen)
+- Creator badge på profil
+- Monetization tools (framtida: tips, patron-support)
+- Beta access till nya creator features
+
+### CLIFF Pro – 249 kr/mån
+**Allt i Creator +**
+- Publicerings-partnerskap: Vi hjälper till med marknadsföring
+- Professional editing tools (samarbete med editor)
+- Revenue share program (tjäna på dina populära stories)*
+- Direct reader communication (nyhetsbrev till följare)
+- Exclusive creator community & mentorship
+- Publishing pathway (kontakt med svenska förlag)
+
+*Revenue share aktiveras vid 10K+ unique readers/månad
 
 ---
 
 ## 🎨 Varför CLIFF Funkar
 
-### För Barn (5–12 år)
-✅ Gör läsning visuellt och interaktivt som de appar barn redan älskar  
-✅ Gamification skapar vanor utan tvång  
-✅ Säkert och föräldraguided utan social media-stress  
-✅ AR-kopplingen gör fysiska böcker "levande"
+### För Tonårsläsare (13–17 år)
+✅ **Möter dem där de är:** TikTok-UX de redan är bekväma med  
+✅ **Rätt längd:** 3–5 min passar uppmärksamhetsspannet  
+✅ **Relaterbart innehåll:** Stories om identitet, kärlek, vänskap, mental hälsa  
+✅ **Social utan stress:** Anonyma reaktioner, ingen press att kommentera  
+✅ **Episodiskt = återkommande:** Cliffhangers gör att de kommer tillbaka  
 
-### För Tonåringar (13–25 år)
-✅ Kombinerar TikTok-konsumtion med djup storytelling  
-✅ Korta format passar med splittrad uppmärksamhet  
-✅ Community och kreativitet – möjlighet att vara skapare  
-✅ Anonymitet minskar prestationsångest
+### För Unga Creators (15–22 år)
+✅ **Låg tröskel att börja:** Skriv direkt i appen, ingen teknisk kunskap krävs  
+✅ **Direkt feedback:** Se hur många som läser och reagerar  
+✅ **Community:** Följare och recognition  
+✅ **Potential att växa:** Från hobby till faktisk författare  
+✅ **Kreativ outlet:** Uttrycka sig och dela berättelser  
 
-### För Föräldrar
-✅ "Bra skärmtid" – meningsfullt digitalt innehåll  
-✅ Insyn utan övervakning  
-✅ Bygger läskultur i familjen  
-✅ Alternativ till YouTube/TikTok för yngre barn
-
----
-
-## 🚀 Affärspotential
-
-### Intäktsströmmar
-1. **Freemium-modell**
-   - Gratis grundbibliotek med annonser (barn) eller begränsat innehåll (teens)
-   - Premium familjeabonnemang (obegränsat, AR-innehåll, exklusiva böcker)
-
-2. **AR-bokpartnerskap**
-   - Samarbeten med förlag för att förstärka fysiska böcker
-   - Licensavtal för AR-innehåll
-
-3. **Utgivningsplattform**
-   - Provisionssystem där framgångsrika community-författare kan tjäna pengar
-   - Förlagssamarbeten för att upptäcka talanger
-
-4. **Utbildningssektor**
-   - Licensiering till skolor och bibliotek
-   - Klassrumskonton med lärarinsikter
-
-### Tillväxtmöjligheter
-- **Internationell expansion** – översättningar och lokalt innehåll
-- **Content partnerships** – samarbeten med etablerade barn- och ungdomsförfattare
-- **AI-generering** – personaliserade berättelser baserat på intressen
-- **Social reading circles** – för äldre användare, säkra bokklubbar
-- **Merch & physical products** – från digitala favoritberättelser till fysiska böcker
-
-### Marknadsfördel
-- **Ingen direkt konkurrent** täcker hela spektrumet barn → unga vuxna med samma ekosystem
-- **Familjefokus** skapar stickiness (hela familjen på en plattform)
-- **AR-hybridmodell** differentierar från rent digitala plattformar
-- **Creator economy** för tonåringar skapar organisk tillväxt
+### Competitive Advantage
+✅ **Ingen gör detta i Sverige:** Wattpad är föråldrat, Goodnovel är spammy  
+✅ **TikTok-generation väntar:** De vill ha detta format  
+✅ **Creator economy:** Användarna skapar innehållet = skalbart  
+✅ **Episodisk modell:** Högre retention än "en-bok-i-taget"  
 
 ---
 
-## 📊 Nästa Steg
+## 🚀 MVP Roadmap (6 månader)
 
-### MVP (Minimum Viable Product)
-1. **CLIFF Kids** – fokusera på 5–12 år först
-   - 50–100 kurerade digitala bilderböcker
-   - Grundläggande reading streaks och badges
-   - Föräldrainsikter dashboard
-   - Enkel story trail-algoritm
+### Månad 1-2: Core Platform
+**Mål:** Basic reading & creation experience
+- [ ] User authentication (email/social login)
+- [ ] Vertical swipe discovery feed
+- [ ] Story reader med episode navigation
+- [ ] Basic creator editor
+- [ ] 30 kurerade stories (seed content)
 
-2. **CLIFF Teens** – parallell utveckling av befintligt koncept
-   - Community för mikroberättelser
-   - User-generated content verktyg
-   - Anonyma reaktioner
+### Månad 3-4: Engagement Features
+**Mål:** Get users hooked
+- [ ] Reakcions-system
+- [ ] Följare & following
+- [ ] Reading streaks
+- [ ] Offline downloads
+- [ ] Push notifications (ny episod, streak reminder)
+- [ ] Personlig feed-algoritm v1
 
-### Fas 2
-- AR-integration (partnerskap med 3–5 förlag)
-- Utökad gamification
-- Förbättrade AI-rekommendationer
-- Klassrumskonton för pilotskolor
+### Månad 5-6: Monetization & Polish
+**Mål:** Launch ready
+- [ ] Subscription tiers (Stripe integration)
+- [ ] Creator analytics dashboard
+- [ ] Trending/featured sektion
+- [ ] Onboarding flow
+- [ ] App store optimization
+- [ ] 100+ community-created stories
 
-### Fas 3
-- Internationalisering (engelska + nordiska språk)
-- Fullskalig creator economy
-- White-label för bibliotek och skolor
+**Beta Launch:** Månad 6 (begränsat till 1000 users för feedback)
+
+---
+
+## 📊 Framtida Expansion (Efter MVP Success)
+
+### Fas 2: Monetization för Creators (Månad 9-12)
+- Revenue share program
+- Tipping/donation system
+- Patreon-style supporter-tiers för authors
+- Marketplace för commissioned stories
+
+### Fas 3: Community Features (År 2)
+- Kommentarer (modererade)
+- Reading clubs/circles
+- Författar-samarbeten
+- Contests & challenges med priser
+
+### Fas 4: Bredare Målgrupp (År 2-3)
+- **CLIFF Kids:** Förenklad version för barn 8-12 år
+  - Enklare stories
+  - Föräldrakontroller
+  - Inga user-generated content för yngre
+  
+- **CLIFF Classic:** För vuxna 22+
+  - Längre format (10-15 min)
+  - Mer mature content
+  - Potential för integration med förlag
+
+### Fas 5: Media Expansion (År 3+)
+- Audiodrama-versioner av populära stories
+- Partnerships med svenska förlag för print
+- Original commissioned content från etablerade författare
+- International expansion (engelsk version)
 
 ---
 
 ## 💡 Sammanfattning
 
-**CLIFF** är inte bara en läsapp – det är en familjebaserad plattform som gör läsning lika engagerande som sociala medier genom att kombinera:
+**CLIFF** är en **micro-storytelling platform för tonåringar** som kombinerar:
 
-🎮 **Spelmekanik** (streaks, badges, progression)  
-📚 **Vackert innehåll** (animerade böcker, AR-upplevelser)  
-👨‍👩‍👧‍👦 **Familjevärden** (säker, föräldrastyrd, ålderanpassad)  
-✨ **TikTok-UX** (swipe, upptäck, addera)  
-🎨 **Kreativitet** (skriv och dela för tonåringar/unga vuxna)
+📱 **TikTok-UX** (vertical swipe, algoritm, quick engagement)  
+📖 **Episodisk storytelling** (cliffhangers, serialization)  
+✍️ **Creator economy** (användare skapar innehåll)  
+💰 **Subscription model** (biblioteksstorlek som differentiator)  
+🎯 **Fokuserad MVP** (teens först, expansion senare)
 
-Från barndomens första bilderbok till tonåringens första novell – CLIFF växer med familjen.
+**Vi börjar smalt, gör det bra, och växer därifrån.**

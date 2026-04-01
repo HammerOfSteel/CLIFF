@@ -2,48 +2,50 @@
 
 ## 🎯 Executive Summary
 
-CLIFF is a cross-platform family reading application built with **Flutter** for maximum reach (iOS, Android, Web). The platform combines Netflix-style content discovery with TikTok-inspired vertical navigation, wrapped in a kid-friendly interface that scales from ages 5-25.
+CLIFF is a **mobile-first micro-storytelling platform for teenagers (13-19)** built with **Flutter**. Think TikTok meets Wattpad – vertical swipe discovery, episodic stories, and user-generated content. We're starting lean with a focused MVP targeting the teen demographic, then expanding to other age groups after product-market fit.
+
+**Why teens first?** Social media usage is exploding in this group, but book reading is declining. We meet them where they are with short-form, episodic content that builds reading habits.
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Technology Stack (Simplified MVP)
 
 ### Frontend
 - **Framework:** Flutter 3.x
-  - Single codebase for iOS, Android, and Web
-  - Native performance with beautiful animations
-  - Rich widget ecosystem for custom UI
-  - Great for handling complex gestures (swipe, page turns)
+  - Single codebase for iOS & Android (Web as Phase 2)
+  - Native performance with smooth animations
+  - Perfect for vertical swipe gestures
+  - Rich widget ecosystem
 
 ### Backend & Services
 - **Backend as a Service:** Firebase
-  - **Authentication:** Firebase Auth (family accounts, parent/child profiles)
-  - **Database:** Firestore (user data, reading progress, achievements)
-  - **Storage:** Firebase Storage (book assets, images, animations)
-  - **Analytics:** Firebase Analytics (engagement tracking)
-  - **Push Notifications:** Firebase Cloud Messaging (reading reminders, new content)
+  - **Authentication:** Firebase Auth (email, Google, Apple Sign-In)
+  - **Database:** Firestore (stories, users, reactions, reading progress)
+  - **Storage:** Firebase Storage (cover images, story assets)
+  - **Analytics:** Firebase Analytics + Mixpanel
+  - **Push Notifications:** Firebase Cloud Messaging (new episode alerts)
+  - **Functions:** Cloud Functions (content moderation, notifications)
   
 - **Content Delivery:** 
-  - **CDN:** Cloudflare or Firebase Hosting for static assets
-  - **Video/Animation:** Lottie files for lightweight animations
-  - **Images:** WebP format with progressive loading
+  - **CDN:** Firebase Hosting + Cloudflare
+  - **Images:** WebP format with caching
+  - **Text:** Markdown-based with custom rendering
 
-- **AI/ML Services:**
-  - **Recommendation Engine:** Firebase ML or custom API
-  - **Content Moderation:** Google Cloud Natural Language API (for user-generated content)
-  - **Text-to-Speech:** Google Cloud TTS or Azure Cognitive Services
+- **Payment Processing:**
+  - **Subscriptions:** Stripe (in-app purchases for mobile)
+  - **RevenueCat:** For managing cross-platform subscriptions
 
-### AR Integration
-- **AR Foundation:** For cross-platform AR (ARKit on iOS, ARCore on Android)
-- **Image Recognition:** Vuforia or Google ML Kit for book scanning
-- **3D Assets:** Unity integration for complex AR experiences (optional Phase 2)
+- **Content Moderation:**
+  - **Automated:** Google Cloud Natural Language API (profanity, inappropriate content)
+  - **Manual:** Admin dashboard for review queue
 
 ### Developer Tools
 - **Version Control:** Git + GitHub
 - **CI/CD:** GitHub Actions or Codemagic
 - **Testing:** Flutter test suite + Firebase Test Lab
-- **Design:** Figma (design system and prototypes)
+- **Design:** Figma (prototypes and design system)
 - **Project Management:** Linear or Notion
+- **Monitoring:** Sentry (error tracking)
 
 ---
 
@@ -51,170 +53,259 @@ CLIFF is a cross-platform family reading application built with **Flutter** for 
 
 ### Color Palette
 
-#### Primary Brand Colors
+**Primary Theme (Teen-Focused)**
 ```
-Primary (Brand Purple):   #6B4CE6  // Magical, creative, engaging
-Secondary (Warm Orange):  #FF8B3D  // Energy, excitement, warmth
-Accent (Mint Green):      #4ECDC4  // Fresh, playful, growth
+Background Light:  #FFFFFF   // Clean white (light mode)
+Background Dark:   #0F0F1E   // Deep dark (default mode)
+
+Primary:           #8B7EFF   // Purple (brand, CTAs, links)
+Secondary:         #FF6B9D   // Pink accent (reactions, highlights)
+Accent:            #4ECDC4   // Teal (success, new content)
+
+Text Primary:      #F8F9FA   // White (dark mode)
+Text Secondary:    #B2B9C0   // Light gray (dark mode)
+Text Dim:          #6B7280   // Dimmed text
+
+Card Background:   #1A1A2E   // Elevated surfaces
+Card Border:       #2A2A3E   // Subtle borders
+
+Error:             #EF4444   // Errors, warnings
+Success:           #10B981   // Achievements, completed
+Warning:           #F59E0B   // Caution states
 ```
 
-#### Age-Specific Themes
-
-**CLIFF Kids (5-12 years)**
+**Light Mode Alternative (Optional for MVP)**
 ```
-Background:        #FFF9F4  // Warm cream
-Primary:           #FF6B9D  // Playful pink
-Secondary:         #FFB84D  // Sunny yellow
-Accent:            #7DD3C0  // Mint green
-Text Primary:      #2D3436  // Soft black
-Text Secondary:    #636E72  // Medium gray
-Success:           #55EFC4  // Achievement green
-```
-
-**CLIFF Teens (13-17 years)**
-```
-Background:        #1E1E2E  // Dark mode default
-Primary:           #8B7EFF  // Purple
-Secondary:         #FF6B9D  // Pink accent
-Accent:            #4ECDC4  // Teal
-Text Primary:      #F8F9FA  // White
-Text Secondary:    #B2B9C0  // Light gray
-Card Background:   #2A2A3E  // Elevated dark
-```
-
-**CLIFF Community (15-25 years)**
-```
-Background:        #0F0F1E  // Deep dark
-Primary:           #A78BFA  // Lavender
-Secondary:          #EC4899  // Hot pink
-Accent:            #10B981  // Success green
-Text Primary:      #FFFFFF  // Pure white
-Card Background:   #1A1A2E  // Card dark
+Background:        #F9FAFB   // Light gray
+Card Background:   #FFFFFF   // White cards
+Text Primary:      #111827   // Almost black
+Text Secondary:    #6B7280   // Gray
 ```
 
 ### Typography
 
 ```
-Primary Font: Inter (modern, clean, highly readable)
+Primary Font: Inter (modern, clean, web-safe)
   - Headings: 700 (Bold)
+  - Subheadings: 600 (SemiBold)
   - Body: 400 (Regular)
   - UI Elements: 500 (Medium)
 
-Secondary Font: Fredoka (playful, kid-friendly for CLIFF Kids)
-  - Headings: 600 (SemiBold)
-  - Buttons: 500 (Medium)
+Reading Font: Literata or Georgia (serif for story content)
+  - Story title: 700 (Bold)
+  - Story body: 400 (Regular)
+  - Emphasis: 600 (SemiBold) or italic
 
-Reading Font: Literata or Merriweather (serif for long-form content)
-  - Body: 400 (Regular)
-  - Emphasis: 600 (SemiBold)
+Accent Font: Space Grotesk (modern, for stats/numbers)
+  - Used for: reader counts, chapter numbers, dates
 
-Font Sizes (responsive):
-  Kids:    H1: 28sp, H2: 22sp, Body: 16sp, Caption: 14sp
-  Teens:   H1: 24sp, H2: 20sp, Body: 15sp, Caption: 13sp
-  Community: H1: 22sp, H2: 18sp, Body: 14sp, Caption: 12sp
+Font Sizes (scaled for mobile):
+  H1 (Page Headers):    28sp / 1.75rem
+  H2 (Section):         22sp / 1.375rem
+  H3 (Card titles):     18sp / 1.125rem
+  Body (Stories):       16sp / 1rem
+  Body Small:           14sp / 0.875rem
+  Caption:              12sp / 0.75rem
+  
+Line Heights:
+  Headings: 1.2
+  Body text: 1.6 (comfortable reading)
+  UI elements: 1.4
 ```
 
 ### UI Components
 
-#### Navigation Patterns
+#### Navigation Pattern: TikTok-Style Vertical Swipe
 
-**CLIFF Kids - Netflix Kids Style**
-- Large, colorful category cards
-- Horizontal scrolling carousels
-- Big tap targets (min 60x60dp)
-- Bottom navigation with icons + labels
-- Clear visual feedback on all interactions
+**Main Discovery Feed:**
+- Full-screen story preview cards
+- Vertical PageView (swipe up/down)
+- Side action buttons (reaction, bookmark, share)
+- Bottom sheet for story details
+- Haptic feedback on swipe
 
-**CLIFF Teens/Community - TikTok Style**
-- Vertical swipe for content discovery
-- Side navigation drawer
-- Floating action buttons
-- Quick gesture navigation
-- Subtle haptic feedback
+**Navigation Structure:**
+```
+Bottom Navigation (4-5 tabs):
+[Home/Discover] [Library] [Create] [Profile]
 
-#### Core UI Elements
-
-**Cards:**
-```dart
-// Book Preview Card
-- Rounded corners: 16dp
-- Shadow: elevation 4
-- Image aspect ratio: 3:4 (portrait)
-- Hover/press animation: scale 0.98
-- Shimmer loading state
+Optional 5th: [Trending] or [Following]
 ```
 
-**Buttons:**
+#### Core UI Components
+
+**Story Preview Card (Full Screen)**
 ```dart
-Primary: Filled, rounded 12dp, height 52dp
-Secondary: Outlined, rounded 12dp, height 48dp
-Icon buttons: 44x44dp minimum (accessibility)
-Floating: 56x56dp with icon
+- Cover image background (dimmed overlay)
+- Gradient overlay for text readability
+- Title: prominent, Bold, 24-28sp
+- Metadata: Genre • Reading time • Episodes
+- Stats: 👁 Reads, 🔥 Reactions
+- CTA Button: "Start Reading" or "Continue Ch. 3"
+- Author badge: Small circular avatar + name
+- Swipe indicator (subtle)
 ```
 
-**Animations:**
+**Story Reader View**
 ```dart
-Page transitions: 300ms cubic ease-out
-Card animations: 200ms elastic
-Loading states: Shimmer or Lottie
-Micro-interactions: 150ms
+- Full immersion (hide UI initially)
+- Tap to show/hide navigation
+- Header: Back button, Chapter dropdown
+- Footer: Previous/Next episode buttons
+- Progress indicator: thin bar at top (% of chapter)
+- Formatting: Respect author's text styling
+- Background: customizable (dark/sepia/light)
+```
+
+**Creator Editor**
+```dart
+- Markdown-style toolbar
+- Live preview mode
+- Image upload dropzone
+- Episode manager sidebar
+- Publish/Save draft buttons
+- Character count
+```
+
+**Buttons & Interactions**
+```dart
+Primary Button:
+  - Filled background
+  - Border radius: 12dp
+  - Height: 48-52dp
+  - Tap effect: scale 0.96 + haptic
+
+Secondary Button:
+  - Outlined
+  - Border radius: 12dp
+  - Height: 44-48dp
+
+Icon Buttons:
+  - 44x44dp touch target
+  - Subtle hover/press state
+
+Floating Action Button (Creator):
+  - 56x56dp
+  - Elevation 6
+  - Icon: Pen/Plus
+```
+
+**Animations**
+```dart
+Page transitions:      300ms cubic-bezier
+Card swipe:            200ms spring physics
+Button press:          150ms ease-out
+Loading shimmer:       1500ms linear loop
+Reaction pop:          400ms elastic (Lottie)
+Achievement badge:     600ms scale + fade
 ```
 
 ---
 
 ## 🏗️ Application Architecture
 
-### Folder Structure
+### Folder Structure (Clean Architecture)
 ```
 lib/
 ├── main.dart
 ├── app/
-│   ├── app.dart                    # MaterialApp configuration
-│   └── routes.dart                 # Navigation/routing
+│   ├── app.dart                    # MaterialApp config
+│   ├── router.dart                 # GoRouter navigation
+│   └── theme.dart                  # Theme data
 ├── core/
-│   ├── constants/                  # Colors, strings, assets
-│   ├── theme/                      # Theme data, text styles
-│   ├── utils/                      # Helpers, extensions
-│   └── services/                   # Firebase, API clients
+│   ├── constants/
+│   │   ├── colors.dart
+│   │   ├── strings.dart
+│   │   └── assets.dart
+│   ├── theme/
+│   │   ├── app_theme.dart
+│   │   └── text_styles.dart
+│   ├── utils/
+│   │   ├── validators.dart
+│   │   ├── formatters.dart
+│   │   └── extensions.dart
+│   └── services/
+│       ├── firebase_service.dart
+│       ├── auth_service.dart
+│       ├── storage_service.dart
+│       └── analytics_service.dart
 ├── features/
 │   ├── auth/
-│   │   ├── data/                   # Models, repositories
-│   │   ├── domain/                 # Business logic
-│   │   └── presentation/           # UI, widgets, screens
-│   ├── kids/
-│   │   ├── home/
-│   │   ├── book_reader/
-│   │   ├── achievements/
-│   │   └── profile/
-│   ├── teens/
-│   │   ├── discover/
-│   │   ├── story_reader/
-│   │   ├── create/
-│   │   └── profile/
-│   ├── parent/
-│   │   ├── dashboard/
-│   │   ├── settings/
-│   │   └── insights/
-│   └── shared/
-│       ├── widgets/                # Reusable components
-│       └── models/                 # Shared data models
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │   └── repositories/
+│   │   ├── domain/
+│   │   │   └── usecases/
+│   │   └── presentation/
+│   │       ├── screens/
+│   │       ├── widgets/
+│   │       └── providers/
+│   ├── discover/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── reader/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── creator/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   ├── profile/
+│   │   └── ...
+│   └── library/
+│       └── ...
+├── shared/
+│   ├── widgets/                    # Reusable components
+│   │   ├── buttons/
+│   │   ├── cards/
+│   │   └── loaders/
+│   └── models/                     # Shared data models
 └── generated/                      # Auto-generated files
 
 assets/
 ├── images/
+│   ├── icons/
+│   ├── placeholders/
+│   └── onboarding/
 ├── animations/                     # Lottie files
-├── fonts/
-└── books/                          # Sample content
+└── fonts/
+    ├── Inter/
+    ├── Literata/
+    └── SpaceGrotesk/
 ```
 
-### State Management
-**Riverpod 2.x** (recommended)
-- Clean dependency injection
-- Compile-time safety
-- Great for family/multi-profile management
-- Easy testing
+### State Management: Riverpod 2.x
 
-Alternative: **Bloc** (more verbose but explicit)
+**Why Riverpod?**
+- Compile-time safety
+- No context needed
+- Easy testing
+- Great for async state
+- Provider caching
+
+**Example Providers:**
+```dart
+// Story feed provider
+final discoverFeedProvider = FutureProvider.autoDispose<List<Story>>((ref) async {
+  final repo = ref.watch(storyRepositoryProvider);
+  return repo.getDiscoverFeed();
+});
+
+// Current user provider
+final currentUserProvider = StreamProvider<User?>((ref) {
+  final authService = ref.watch(authServiceProvider);
+  return authService.userStream;
+});
+
+// Reading progress provider
+final readingProgressProvider = StateNotifierProvider.family<
+  ReadingProgressNotifier, ReadingProgress?, String
+>((ref, storyId) {
+  return ReadingProgressNotifier(storyId);
+});
+```
 
 ### Key Packages
 ```yaml
@@ -230,6 +321,7 @@ dependencies:
   cloud_firestore: ^4.14.0
   firebase_storage: ^11.6.0
   firebase_analytics: ^10.8.0
+  cloud_functions: ^4.6.0
   
   # UI & Animations
   lottie: ^3.0.0
@@ -237,25 +329,31 @@ dependencies:
   shimmer: ^3.0.0
   flutter_animate: ^4.3.0
   
-  # AR (Phase 2)
-  ar_flutter_plugin: ^0.7.3
-  
-  # Media
-  just_audio: ^0.9.36              # Audio playback
-  video_player: ^2.8.0             # Video content
-  
   # Navigation
   go_router: ^13.0.0
   
+  # Markdown & Text
+  flutter_markdown: ^0.6.18
+  markdown: ^7.1.1
+  
+  # Media
+  image_picker: ^1.0.5             # For cover upload
+  
+  # Subscriptions
+  purchases_flutter: ^6.0.0         # RevenueCat
+  
   # Utilities
-  intl: ^0.19.0                     # Internationalization
+  intl: ^0.19.0                     
   path_provider: ^2.1.0
   shared_preferences: ^2.2.0
+  url_launcher: ^6.2.0
+  timeago: ^3.6.0                   # "2 hours ago"
   
 dev_dependencies:
   flutter_test: sdk: flutter
   flutter_lints: ^3.0.0
   mockito: ^5.4.0
+  build_runner: ^2.4.0
 ```
 
 ---
