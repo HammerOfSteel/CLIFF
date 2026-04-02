@@ -137,13 +137,13 @@ jobs:
                 context: ./design
                 dockerfile: Dockerfile
                 args:
-                  - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com/api
+                  - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com
               container_name: cliff-frontend
               ports:
                 - "3001:3000"
               environment:
                 - NODE_ENV=production
-                - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com/api
+                - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com
               depends_on:
                 - backend
               restart: unless-stopped
