@@ -1,0 +1,197 @@
+# -----------------------------------------------------------------
+# Deploy CLIFF to Oracle Cloud (cliff.dancingsalamanders.com)
+# -----------------------------------------------------------------
+# Manual-only workflow (workflow_dispatch) — only repo collaborators
+# with write access can trigger it.
+#
+# Strategy:
+#   1. Build frontend and backend Docker images
+#   2. Deploy entire stack to Oracle Cloud via rsync
+#   3. Restart CLIFF containers without affecting other services
+#
+# Required GitHub Secrets:
+#   ORACLE_SSH_KEY  — contents of the SSH private key
+#   ORACLE_HOST     — server IP (129.151.193.219)
+#   ORACLE_USER     — SSH user (ubuntu)
+# -----------------------------------------------------------------
+
+name: Deploy CLIFF to Production
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      DEPLOY_DIR: /home/ubuntu/cliff
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Setup SSH ─────────────────────────────────────────────
+      - name: Setup SSH connection
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ORACLE_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          cat > ~/.ssh/config <<EOF
+          Host oracle
+            HostName ${{ secrets.ORACLE_HOST }}
+            User ${{ secrets.ORACLE_USER }}
+            IdentityFile ~/.ssh/deploy_key
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+
+          # Test connection
+          ssh oracle "echo '✅ SSH connection OK'"
+
+      # ── Prepare deployment directory ──────────────────────────
+      - name: Prepare server deployment directory
+        run: |
+          echo "Creating deployment directory structure..."
+          ssh oracle "mkdir -p ${DEPLOY_DIR}/{backend,design}"
+
+      # ── Deploy backend ────────────────────────────────────────
+      - name: Deploy backend
+        run: |
+          echo "Deploying backend to Oracle Cloud..."
+          rsync -az --delete \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            "${GITHUB_WORKSPACE}/backend/" \
+            oracle:${DEPLOY_DIR}/backend/
+
+          echo "✅ Backend deployed"
+
+      # ── Deploy frontend ───────────────────────────────────────
+      - name: Deploy frontend
+        run: |
+          echo "Deploying frontend to Oracle Cloud..."
+          rsync -az --delete \
+            --exclude='node_modules' \
+            --exclude='.next' \
+            --exclude='.git' \
+            "${GITHUB_WORKSPACE}/design/" \
+            oracle:${DEPLOY_DIR}/design/
+
+          echo "✅ Frontend deployed"
+
+      # ── Create production docker-compose ──────────────────────
+      - name: Create production docker-compose.yml
+        run: |
+          cat > /tmp/docker-compose.prod.yml <<'COMPOSE_EOF'
+          version: '3.8'
+
+          services:
+            postgres:
+              image: postgres:16-alpine
+              container_name: cliff-postgres
+              environment:
+                POSTGRES_USER: cliff_user
+                POSTGRES_PASSWORD: cliff_password
+                POSTGRES_DB: cliff_db
+              ports:
+                - "5434:5432"
+              volumes:
+                - cliff_postgres_data:/var/lib/postgresql/data
+              healthcheck:
+                test: ["CMD-SHELL", "pg_isready -U cliff_user -d cliff_db"]
+                interval: 10s
+                timeout: 5s
+                retries: 5
+              restart: unless-stopped
+
+            backend:
+              build:
+                context: ./backend
+                dockerfile: Dockerfile
+              container_name: cliff-backend
+              ports:
+                - "4000:4000"
+              volumes:
+                - ./backend:/app
+                - /app/node_modules
+              environment:
+                - NODE_ENV=production
+                - DATABASE_URL=postgresql://cliff_user:cliff_password@postgres:5432/cliff_db
+                - JWT_SECRET=cliff-production-secret-2026-change-me
+                - JWT_EXPIRES_IN=7d
+                - PORT=4000
+              depends_on:
+                postgres:
+                  condition: service_healthy
+              command: npm start
+              restart: unless-stopped
+
+            frontend:
+              build:
+                context: ./design
+                dockerfile: Dockerfile
+              container_name: cliff-frontend
+              ports:
+                - "3001:3000"
+              volumes:
+                - ./design:/app
+                - /app/node_modules
+                - /app/.next
+              environment:
+                - NODE_ENV=production
+                - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com/api
+              depends_on:
+                - backend
+              restart: unless-stopped
+
+          volumes:
+            cliff_postgres_data:
+          COMPOSE_EOF
+
+          # Upload to server
+          scp /tmp/docker-compose.prod.yml oracle:${DEPLOY_DIR}/docker-compose.yml
+
+      # ── Deploy & Restart ──────────────────────────────────────
+      - name: Deploy and restart CLIFF containers
+        run: |
+          echo "Building and restarting CLIFF containers..."
+          ssh oracle "cd ${DEPLOY_DIR} && \
+            sudo docker compose down && \
+            sudo docker compose up --build -d && \
+            echo '✅ CLIFF containers restarted successfully'"
+
+          # Wait for services to be healthy
+          echo "Waiting for services to start..."
+          sleep 10
+
+          # Check container status
+          echo "=== Container Status ==="
+          ssh oracle "sudo docker ps --filter 'name=cliff-' --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+
+      # ── Health Check ──────────────────────────────────────────
+      - name: Health check
+        run: |
+          echo "Checking backend health..."
+          ssh oracle "curl -sf http://localhost:4000/health || echo '⚠️  Backend health check failed'"
+
+          echo ""
+          echo "✅ Deployment complete!"
+          echo "🌐 Frontend: http://cliff.dancingsalamanders.com (configure nginx + SSL)"
+          echo "🔌 Backend: http://cliff.dancingsalamanders.com/api (via nginx proxy)"
+          echo ""
+          echo "Next steps:"
+          echo "1. Configure nginx for cliff.dancingsalamanders.com"
+          echo "2. Run: sudo certbot --nginx -d cliff.dancingsalamanders.com"
+
+      # ── Cleanup ───────────────────────────────────────────────
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
