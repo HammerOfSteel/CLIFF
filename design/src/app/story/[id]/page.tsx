@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { mockStories } from '@/data/mockStories';
 import ReactMarkdown from 'react-markdown';
+import PDFViewer from '@/components/PDFViewer';
+import BottomNav from '@/components/BottomNav';
 import { ArrowLeft, ChevronDown, Heart, Share2, Eye, Flame } from 'lucide-react';
 import { formatNumber } from '@/lib/utils';
 
@@ -19,6 +21,42 @@ export default function StoryPage() {
     return <div className="min-h-screen flex items-center justify-center">Story not found</div>;
   }
 
+  // Handle PDF type stories
+  if (story.type === 'pdf' && story.pdfPath) {
+    return (
+      <div className="h-screen bg-dark flex flex-col">
+        {/* Header */}
+        <header className="sticky top-0 z-10 bg-surface/90 backdrop-blur border-b border-border">
+          <div className="flex items-center justify-between p-4">
+            <button 
+              onClick={() => router.back()}
+              className="p-2 hover:bg-surface-variant rounded-full transition"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+
+            <div className="flex-1 text-center">
+              <h1 className="text-lg font-semibold">{story.title}</h1>
+              <p className="text-xs text-text-dim">av {story.author}</p>
+            </div>
+
+            <button className="p-2 hover:bg-surface-variant rounded-full transition">
+              <Share2 className="w-5 h-5" />
+            </button>
+          </div>
+        </header>
+
+        {/* PDF Viewer */}
+        <div className="flex-1 overflow-hidden">
+          <PDFViewer pdfPath={story.pdfPath} />
+
+        <BottomNav activeTab="library" />
+        </div>
+      </div>
+    );
+  }
+
+  // Handle text/episodic stories
   const episode = story.episodes[currentEpisode];
 
   const reactions = [
@@ -61,7 +99,7 @@ export default function StoryPage() {
       </header>
 
       {/* Content */}
-      <main className="max-w-2xl mx-auto px-6 py-8">
+      <main className="max-w-2xl mx-auto px-6 py-8 pb-24">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{episode.title}</h1>
           <div className="flex items-center gap-4 text-sm text-text-dim">
@@ -146,6 +184,8 @@ export default function StoryPage() {
               </button>
             </div>
           )}
+
+      <BottomNav activeTab="library" />
         </div>
       </main>
     </div>

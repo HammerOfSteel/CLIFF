@@ -41,12 +41,12 @@ Unga vuxna som:
 - **Quick engagement:** Typ "👁 2.3K läst detta", "🔥 Trending", "Ny episod idag"
 - **Personlig feed:** Algoritmen lär sig vad du gillar (som FYP på TikTok)
 
-### Skapa & Bli Läst
+### Skapa & Dela Dina Berättelser
 - **Enkel editor:** Skriv direkt i appen med formatering och bildinsättning
 - **Publicera episodiskt:** Släpp en del i taget för att bygga spänning
 - **Feedback från läsare:** Anonyma reaktioner (❤️ 😭 😱 🔥 💀) och lässtatistik
 - **Upptäckts-möjlighet:** Trending-sektion, featured stories, följare-system
-- **Potential:** Framgångsrika författare kan bli publicerade eller tjäna pengar (framtida feature)
+- **Kreativ utveckling:** Skriv för glädjens skull och uttryck dig autentiskt
 
 ---
 
@@ -95,7 +95,11 @@ Unga vuxna som:
 - **Profile badges:** "5 böcker lästa", "Första story publicerad", "100 readers"
 - **Progress visualization:** Se din läsresa
 
----
+### Skrivtävlingar & Community
+- **Halvårsvisa tävlingar:** Var 6:e månad arrangeras skrivtävlingar
+- **Genrebaserade kategorier:** Vinnare utses per genre (romance, thriller, fantasy, etc.)
+- **Noveller blir episoder:** Vinnande noveller delas upp i episoder och featured
+- **Kreativ inspiration:** Främja uttryck och berättarglädje, inte konkurrens
 
 ---
 
@@ -111,15 +115,16 @@ Unga vuxna som:
 ### För Unga Creators (15–22 år)
 ✅ **Låg tröskel att börja:** Skriv direkt i appen, ingen teknisk kunskap krävs  
 ✅ **Direkt feedback:** Se hur många som läser och reagerar  
-✅ **Community:** Följare och recognition  
-✅ **Potential att växa:** Från hobby till faktisk författare  
-✅ **Kreativ outlet:** Uttrycka sig och dela berättelser  
+✅ **Autentiskt community:** Följare och genuint erkännande för din kreativitet  
+✅ **Kreativ utveckling:** Hitta din röst och utvecklas som berättare  
+✅ **Uttryck dig fritt:** Dela dina berättelser utan press eller förväntningar om ekonomisk vinning  
 
-### Competitive Advantage
-✅ **Ingen gör detta i Sverige:** Wattpad är föråldrat, Goodnovel är spammy  
-✅ **TikTok-generation väntar:** De vill ha detta format  
-✅ **Creator economy:** Användarna skapar innehållet = skalbart  
-✅ **Episodisk modell:** Högre retention än "en-bok-i-taget"  
+### Varför CLIFF är Annorlunda
+✅ **Svensk kontext:** Inspirerad av poeter.se legacy – autentiskt berättande  
+✅ **TikTok-generation möter läsning:** Doom-scrolling ersätts med meningsfull läsning  
+✅ **Community-driven:** Användarna skapar innehåll för glädjens skull  
+✅ **Episodisk modell:** Högre engagement än traditionell läsning  
+✅ **Fokus på skolor & bibliotek:** Verktyg för lärare att främja läsglädje och kreativitet  
 
 ---
 
@@ -142,49 +147,58 @@ Unga vuxna som:
 - [ ] Push notifications (ny episod, streak reminder)
 - [ ] Personlig feed-algoritm v1
 
-### Månad 5-6: Monetization & Polish
-**Mål:** Launch ready
-- [ ] Subscription tiers (Stripe integration)
-- [ ] Creator analytics dashboard
-- [ ] Trending/featured sektion
+### Månad 5-6: Partnerships & Launch
+**Mål:** Pilotsamarbeten med skolor
+- [ ] Skolkonton och lärarverktyg
+- [ ] Skrivtävling-infrastruktur
 - [ ] Onboarding flow
 - [ ] App store optimization
-- [ ] 100+ community-created stories
+- [ ] 100+ community-skapade stories
+- [ ] Etablera partnerskap med 3-5 pilotskolor
+- [ ] Etablera partnerskap med 1-2 bibliotek
 
-**Beta Launch:** Månad 6 (begränsat till 1000 users för feedback)
+**Beta Launch:** Månad 6 (tillsammans med pilotskolor och bibliotek)
 
 ---
 
-## 📊 Framtida Expansion (Efter MVP Success)
+---
 
-### Fas 2: Monetization för Creators (Månad 9-12)
-- Revenue share program
-- Tipping/donation system
-- Patreon-style supporter-tiers för authors
-- Marketplace för commissioned stories
+## 🏫 Samarbete med Skolor & Bibliotek
 
-### Fas 3: Community Features (År 2)
-- Kommentarer (modererade)
-- Reading clubs/circles
-- Författar-samarbeten
-- Contests & challenges med priser
+### Tillsammans för läsglädje och skaparglädje
+CLIFF är inte en kommersiell produkt – det är ett verktyg för att väcka läslust och kreativitet hos unga. Vi söker partners som delar denna vision och vill vara med och introducera plattformen till sina elever och besökare.
 
-### Fas 4: Bredare Målgrupp (År 2-3)
-- **CLIFF Kids:** Förenklad version för barn 8-12 år
-  - Enklare stories
-  - Föräldrakontroller
-  - Inga user-generated content för yngre
-  
-- **CLIFF Classic:** För vuxna 22+
-  - Längre format (10-15 min)
-  - Mer mature content
-  - Potential för integration med förlag
+**Detta är ett genuint samarbete där vi tillsammans:**
 
-### Fas 5: Media Expansion (År 3+)
-- Audiodrama-versioner av populära stories
-- Partnerships med svenska förlag för print
-- Original commissioned content från etablerade författare
-- International expansion (engelsk version)
+### 🤝 Introducerar CLIFF
+- **Gemensam lansering:** Vi introducerar appen tillsammans till elever/besökare
+- **Pilotprogram:** Skolor och bibliotek är med från början och testar plattformen
+- **Feedback-loop:** Tillsammans utvecklar vi CLIFF baserat på verkliga behov
+- **Utbildning:** Vi utbildar lärare och bibliotekarier i hur plattformen används pedagogiskt
+
+### 📚 Främjar läsglädje
+- **Läsecirklar:** Skapa gemensamma läsgrupper där elever upptäcker stories tillsammans
+- **Klassrumsintegration:** Lägg in CLIFF som en del av svenska-undervisningen
+- **Biblioteksaktiviteter:** Arrangera läskvällar och diskussioner kring populära stories
+- **Gemensamma mål:** Bygga en läskultur där berättelser engagerar och inspirerar
+
+### ✍️ Främjar skaparglädje
+- **Skrivworkshops:** Tillsammans arrangerar vi skrivworkshops på skolor och bibliotek
+- **Gemensamma tävlingar:** Skolor/bibliotek kan arrangera egna lokala tävlingar
+- **Klassrumsprojekt:** Elever skriver gemensamma stories som skolprojekt
+- **Skrivargrupper:** Bibliotek faciliterar skrivargrupper för unga författare
+
+### 🌱 Växer tillsammans
+- **Delad vision:** Vi jobbar för samma mål – mer läsning, mer kreativitet
+- **Öppen kommunikation:** Partners har direkt kontakt med CLIFF-teamet
+- **Utveckling:** Plattformen formas av lärare, bibliotekarier och elevers behov
+- **Community:** Tillsammans bygger vi ett community kring berättande
+
+### Tekniskt stöd:
+- Gratis tillgång för alla elever/besökare via institution eller egna konton
+- Lärarverktyg och statistik för pedagogiskt stöd (respekterar integritet)
+- Full tillgång till allt innehåll – inga begränsningar
+- Kontinuerlig support och vidareutveckling
 
 ---
 
@@ -192,10 +206,11 @@ Unga vuxna som:
 
 **CLIFF** är en **micro-storytelling platform för tonåringar** som kombinerar:
 
-📱 **TikTok-UX** (vertical swipe, algoritm, quick engagement)  
+📱 **TikTok-UX** (vertical swipe, doom-scrolling → läsning)  
 📖 **Episodisk storytelling** (cliffhangers, serialization)  
-✍️ **Creator economy** (användare skapar innehåll)  
-💰 **Subscription model** (biblioteksstorlek som differentiator)  
-🎯 **Fokuserad MVP** (teens först, expansion senare)
+✍️ **Kreativ glädje** (skriv och dela för uttryckets skull)  
+🏫 **Skol/bibliotekspartnerskap** (tillgängligt för alla elever)  
+🏆 **Skrivtävlingar** (främja kreativitet var 6:e månad)  
+🎯 **Bred genrebibliotek** (alla hittar något som känns)
 
-**Vi börjar smalt, gör det bra, och växer därifrån.**
+**Grundtanken:** Ersätt endless scrolling med meningsfull läsning och autentiskt skapande. Inga monetization-tricks, ingen creator economy-press – bara ren glädje i berättande och läsning.

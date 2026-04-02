@@ -10,12 +10,18 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  // Create endless stories by repeating the array
+  const getStoryAtIndex = (index: number) => {
+    return mockStories[index % mockStories.length];
+  };
+
   const handleSwipe = (newDirection: number) => {
-    if (newDirection > 0 && currentIndex < mockStories.length - 1) {
-      setDirection(1);
+    setDirection(newDirection);
+    if (newDirection > 0) {
+      // Swipe up - next story
       setCurrentIndex(currentIndex + 1);
     } else if (newDirection < 0 && currentIndex > 0) {
-      setDirection(-1);
+      // Swipe down - previous story (only if not at start)
       setCurrentIndex(currentIndex - 1);
     }
   };
@@ -27,6 +33,9 @@ export default function Home() {
       handleSwipe(-1);
     }
   };
+
+  const currentStory = getStoryAtIndex(currentIndex);
+  const storyPosition = (currentIndex % mockStories.length) + 1;
 
   return (
     <main 
@@ -45,7 +54,7 @@ export default function Home() {
           className="absolute inset-0"
         >
           <StoryCard 
-            story={mockStories[currentIndex]} 
+            story={currentStory} 
             onSwipe={handleSwipe}
           />
         </motion.div>
@@ -54,7 +63,8 @@ export default function Home() {
       {/* Swipe Indicator */}
       <div className="absolute top-4 right-4 z-20 text-text-dim text-sm flex flex-col items-center gap-1">
         <div className="text-xs opacity-70">↑↓ Swipe</div>
-        <div className="text-xs">{currentIndex + 1} / {mockStories.length}</div>
+        <div className="text-xs">{storyPosition} / {mockStories.length}</div>
+        <div className="text-xs opacity-50">Endless 🔄</div>
       </div>
 
       <BottomNav activeTab="discover" />

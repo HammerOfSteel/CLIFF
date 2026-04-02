@@ -19,6 +19,8 @@ export interface Story {
   };
   status: 'ongoing' | 'completed';
   createdAt: Date;
+  type?: 'text' | 'pdf'; // Type of content
+  pdfPath?: string; // Path to PDF file if type is 'pdf'
 }
 
 export interface Episode {
@@ -31,6 +33,39 @@ export interface Episode {
 }
 
 export const mockStories: Story[] = [
+  {
+    id: 'bloom-moon',
+    title: 'Bloom on the Moon',
+    hook: 'Följ med Star Sailor på ett magiskt äventyr där hon träffar en flodhäst som odlar hopp på månen...',
+    author: 'terrygoleman',
+    authorAvatar: 'https://picsum.photos/seed/terry/100/100',
+    genre: 'Barnbok',
+    coverImage: 'https://picsum.photos/seed/bloom/400/600',
+    type: 'pdf',
+    pdfPath: '/pdf/Bloom_on_the_moon.pdf',
+    episodes: [
+      {
+        id: 'bloom-1',
+        number: 1,
+        title: 'Bloom on the Moon',
+        content: '', // PDF content
+        readTime: 10,
+        publishedAt: new Date('2026-04-01'),
+      },
+    ],
+    stats: {
+      reads: 234,
+      reactions: {
+        love: 189,
+        shocked: 12,
+        fire: 23,
+        sad: 5,
+        dead: 5,
+      },
+    },
+    status: 'completed',
+    createdAt: new Date('2026-04-01'),
+  },
   {
     id: '1',
     title: 'Det Sista Meddelandet',
