@@ -1,23 +1,100 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { storiesApi } from '@/lib/api';
 import BottomNav from '@/components/BottomNav';
-import { PenTool, Image as ImageIcon, Bold, Italic, List } from 'lucide-react';
+import withAuth from '@/components/withAuth';
+import { PenTool, Image as ImageIcon, Bold, Italic, List, ArrowLeft } from 'lucide-react';
 
-export default function CreatePage() {
+function CreatePage() {
+  const router = useRouter();
   const [title, setTitle] = useState('');
+  const [hook, setHook] = useState('');
+  const [genre, setGenre] = useState('');
   const [content, setContent] = useState('');
+  const [episodeTitle, setEpisodeTitle] = useState('Kapitel 1');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Calculate word count and read time
+  const wordCount = content.trim().split(/\s+/).filter(word => word.length > 0).length;
+  const readTime = Math.max(1, Math.ceil(wordCount / 200)); // Assuming 200 words/min
+
+  const handlePublish = async () => {
+    if (!title.trim()) {
+      setError('Titel krävs');
+      return;
+    }
+    if (!hook.trim()) {
+      setError('Kort beskrivning krävs');
+      return;
+    }
+    if (!genre) {
+      setError('Genre krävs');
+      return;
+    }
+    if (!content.trim()) {
+      setError('Innehåll krävs');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      // First create the story
+      const story = await storiesApi.createStory({
+        title: title.trim(),
+        hook: hook.trim(),
+        genre: genre,
+        status: 'ongoing',
+        type: 'text',
+      });
+
+      // Then create the first episode
+      await storiesApi.createEpisode(story.id, {
+        title: episodeTitle.trim(),
+        content: content.trim(),
+        read_time: readTime,
+      });
+
+      // Redirect to the story page
+      router.push(`/story/${story.id}`);
+    } catch (err: any) {
+      console.error('Error publishing story:', err);
+      setError(err.message || 'Kunde inte publicera berättelsen');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-surface border-b border-border">
         <div className="flex items-center justify-between p-4">
-          <button className="text-text-dim">Avbryt</button>
+          <button onClick={() => router.back()} className="text-text-dim flex items-center gap-2">
+            <ArrowLeft className="w-5 h-5" />
+            Avbryt
+          </button>
           <h1 className="text-lg font-semibold">Ny Berättelse</h1>
-          <button className="text-primary font-medium">Spara</button>
+          <button 
+            onClick={handlePublish}
+            disabled={loading}
+            className="text-primary font-medium disabled:opacity-50"
+          >
+            {loading ? 'Publicerar...' : 'Publicera'}
+          </button>
         </div>
       </header>
+
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 mx-4 mt-4 rounded-xl text-sm">
+          {error}
+        </div>
+      )}
 
       {/* Content */}
       <main className="max-w-2xl mx-auto p-4 space-y-6">
@@ -33,12 +110,15 @@ export default function CreatePage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Kort beskrivning</label>
+          <label className="block text-sm font-medium mb-2">Kort beskrivning *</label>
           <textarea
+            value={hook}
+            onChange={(e) => setHook(e.target.value)}
             placeholder="Beskriv din berättelse i en mening..."
             className="w-full bg-surface border border-border rounded-xl px-4 py-3 h-20 resize-none focus:border-primary focus:outline-none transition"
+            maxLength={150}
           />
-          <div className="text-xs text-text-dim mt-1">0/150 tecken</div>
+          <div className="text-xs text-text-dim mt-1">{hook.length}/150 tecken</div>
         </div>
 
         <div>
@@ -53,14 +133,19 @@ export default function CreatePage() {
         <div className="flex gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium mb-2">Genre *</label>
-            <select className="w-full bg-surface border border-border rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition">
-              <option>Välj genre...</option>
-              <option>Romance</option>
-              <option>Thriller</option>
-              <option>Skräck</option>
-              <option>Fantasy</option>
-              <option>Sci-Fi</option>
-              <option>Drama</option>
+            <select 
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+              className="w-full bg-surface border border-border rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition"
+            >
+              <option value="">Välj genre...</option>
+              <option value="Romance">Romance</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Skräck">Skräck</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Drama">Drama</option>
+              <option value="Barnbok">Barnbok</option>
             </select>
           </div>
 
@@ -77,7 +162,7 @@ export default function CreatePage() {
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="text-sm font-medium">Kapitel 1</label>
-            <span className="text-xs text-text-dim">0 ord • ~0 min</span>
+            <span className="text-xs text-text-dim">{wordCount} ord • ~{readTime} min</span>
           </div>
 
           {/* Markdown Toolbar */}
@@ -99,18 +184,21 @@ export default function CreatePage() {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="# Kapitel 1: Början
+            placeholder="Det började med...
 
-Det började med...
-
-Skriv din berättelse här. Du kan använda Markdown för formatering."
-            className="w-full bg-surface border border-border rounded-xl px-4 py-3 min-h-[400px] resize-none focus:border-primary focus:outline-none transition font-mono text-sm"
+Skriv din berättelse här. Håll kapitlen korta (3-5 minuter läsning) och avsluta med en cliffhanger!"
+            className="w-full bg-surface border border-border rounded-xl px-4 py-3 min-h-[400px] resize-none focus:border-primary focus:outline-none transition"
           />
         </div>
 
         <div className="flex gap-4">
-          <button className="flex-1 btn-secondary">Förhandsgranska</button>
-          <button className="flex-1 btn-primary">Publicera Kapitel 1</button>
+          <button 
+            onClick={handlePublish}
+            disabled={loading}
+            className="flex-1 btn-primary disabled:opacity-50"
+          >
+            {loading ? 'Publicerar...' : 'Publicera Kapitel 1'}
+          </button>
         </div>
 
         <div className="card">
@@ -128,3 +216,5 @@ Skriv din berättelse här. Du kan använda Markdown för formatering."
     </div>
   );
 }
+
+export default withAuth(CreatePage);

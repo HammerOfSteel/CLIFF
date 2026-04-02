@@ -1,28 +1,64 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { mockStories } from '@/data/mockStories';
+import { storiesApi } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import PDFViewer from '@/components/PDFViewer';
 import BottomNav from '@/components/BottomNav';
+import withAuth from '@/components/withAuth';
 import { ArrowLeft, ChevronDown, Heart, Share2, Eye, Flame } from 'lucide-react';
 import { formatNumber } from '@/lib/utils';
 
-export default function StoryPage() {
+function StoryPage() {
   const params = useParams();
   const router = useRouter();
   const [currentEpisode, setCurrentEpisode] = useState(0);
   const [showReactions, setShowReactions] = useState(false);
+  const [story, setStory] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const story = mockStories.find(s => s.id === params.id);
+  useEffect(() => {
+    const fetchStory = async () => {
+      try {
+        setLoading(true);
+        const data = await storiesApi.getById(params.id as string);
+        setStory(data);
+      } catch (err: any) {
+        console.error('Error fetching story:', err);
+        setError(err.message || 'Failed to load story');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!story) {
-    return <div className="min-h-screen flex items-center justify-center">Story not found</div>;
+    if (params.id) {
+      fetchStory();
+    }
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
+      </div>
+    );
+  }
+
+  if (error || !story) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <p className="text-text-secondary mb-4">{error || 'Story not found'}</p>
+        <button onClick={() => router.back()} className="btn-secondary">
+          Go Back
+        </button>
+      </div>
+    );
   }
 
   // Handle PDF type stories
-  if (story.type === 'pdf' && story.pdfPath) {
+  if (story.type === 'pdf' && story.pdf_path) {
     return (
       <div className="h-screen bg-dark flex flex-col">
         {/* Header */}
@@ -48,23 +84,34 @@ export default function StoryPage() {
 
         {/* PDF Viewer */}
         <div className="flex-1 overflow-hidden">
-          <PDFViewer pdfPath={story.pdfPath} />
+          <PDFViewer pdfPath={story.pdf_path} />
+        </div>
 
         <BottomNav activeTab="library" />
-        </div>
       </div>
     );
   }
 
   // Handle text/episodic stories
+  if (!story.episodes || story.episodes.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <p className="text-text-secondary mb-4">No episodes available yet</p>
+        <button onClick={() => router.back()} className="btn-secondary">
+          Go Back
+        </button>
+      </div>
+    );
+  }
+
   const episode = story.episodes[currentEpisode];
 
   const reactions = [
-    { emoji: '❤️', count: story.stats.reactions.love, label: 'Love' },
-    { emoji: '😱', count: story.stats.reactions.shocked, label: 'Shocked' },
-    { emoji: '🔥', count: story.stats.reactions.fire, label: 'Fire' },
-    { emoji: '😭', count: story.stats.reactions.sad, label: 'Sad' },
-    { emoji: '💀', count: story.stats.reactions.dead, label: 'Dead' },
+    { emoji: '❤️', count: story.love_count || 0, label: 'Love' },
+    { emoji: '😱', count: story.shocked_count || 0, label: 'Shocked' },
+    { emoji: '🔥', count: story.fire_count || 0, label: 'Fire' },
+    { emoji: '😭', count: story.sad_count || 0, label: 'Sad' },
+    { emoji: '💀', count: story.dead_count || 0, label: 'Dead' },
   ];
 
   return (
@@ -80,7 +127,7 @@ export default function StoryPage() {
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">Kapitel {episode.number}/{story.episodes.length}</span>
+            <span className="text-sm font-medium">Kapitel {episode.episode_number}/{story.episodes.length}</span>
             <ChevronDown className="w-4 h-4" />
           </div>
 
@@ -103,9 +150,9 @@ export default function StoryPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{episode.title}</h1>
           <div className="flex items-center gap-4 text-sm text-text-dim">
-            <span>{episode.readTime} min läsning</span>
+            <span>{episode.read_time} min läsning</span>
             <span>•</span>
-            <span>{formatNumber(story.stats.reads)} läsningar</span>
+            <span>{formatNumber(story.reads || 0)} läsningar</span>
           </div>
         </div>
 
@@ -184,10 +231,12 @@ export default function StoryPage() {
               </button>
             </div>
           )}
-
-      <BottomNav activeTab="library" />
         </div>
       </main>
+
+      <BottomNav activeTab="library" />
     </div>
   );
 }
+
+export default withAuth(StoryPage);

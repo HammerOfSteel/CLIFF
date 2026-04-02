@@ -1,6 +1,44 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cliff-postgres
+    environment:
+      POSTGRES_USER: cliff_user
+      POSTGRES_PASSWORD: cliff_password
+      POSTGRES_DB: cliff_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cliff_user -d cliff_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: cliff-backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://cliff_user:cliff_password@postgres:5432/cliff_db
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production-2026
+      - JWT_EXPIRES_IN=7d
+      - PORT=4000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: npm run dev
+
   cliff-design:
     build:
       context: .
@@ -14,6 +52,12 @@ services:
       - /app/.next
     environment:
       - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
     command: npm run dev
     stdin_open: true
     tty: true
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

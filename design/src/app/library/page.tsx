@@ -1,14 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BottomNav from '@/components/BottomNav';
-import { mockStories } from '@/data/mockStories';
+import withAuth from '@/components/withAuth';
+import { interactionsApi } from '@/lib/api';
 import { formatNumber } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function LibraryPage() {
+function LibraryPage() {
   const [activeTab, setActiveTab] = useState<'reading' | 'saved' | 'finished'>('reading');
+  const [savedStories, setSavedStories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchSavedStories = async () => {
+      if (activeTab === 'saved') {
+        setLoading(true);
+        try {
+          const stories = await interactionsApi.getBookmarks();
+          setSavedStories(stories);
+        } catch (error) {
+          console.error('Error fetching bookmarks:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchSavedStories();
+  }, [activeTab]);
 
   const tabs = [
     { id: 'reading', label: 'Läser' },
@@ -45,81 +66,67 @@ export default function LibraryPage() {
       {/* Content */}
       <main className="p-4">
         {activeTab === 'reading' && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-2">Fortsätt läsa (3)</h2>
-            {mockStories.slice(0, 3).map((story) => (
-              <Link key={story.id} href={`/story/${story.id}`}>
-                <div className="card flex gap-4 hover:border-primary transition cursor-pointer">
-                  <Image
-                    src={story.coverImage}
-                    alt={story.title}
-                    width={80}
-                    height={120}
-                    className="rounded-lg object-cover"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-semibold mb-1">{story.title}</h3>
-                    <p className="text-sm text-text-secondary mb-2 line-clamp-1">{story.hook}</p>
-                    <div className="text-xs text-text-dim mb-2">
-                      Kapitel 2/{story.episodes.length} • 67% klart
-                    </div>
-                    <div className="w-full bg-surface-variant h-1 rounded-full overflow-hidden">
-                      <div className="bg-primary h-full" style={{ width: '67%' }} />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">📚</div>
+            <h3 className="text-lg font-semibold mb-2">Ingen läshistorik än</h3>
+            <p className="text-text-secondary mb-6">
+              Börja läsa berättelser så visas de här
+            </p>
+            <Link href="/">
+              <button className="btn-primary">Upptäck Berättelser</button>
+            </Link>
           </div>
         )}
 
         {activeTab === 'saved' && (
-          <div className="grid grid-cols-2 gap-4">
-            {mockStories.slice(0, 4).map((story) => (
-              <Link key={story.id} href={`/story/${story.id}`}>
-                <div className="space-y-2 cursor-pointer group">
-                  <div className="relative aspect-[2/3] rounded-xl overflow-hidden">
-                    <Image
-                      src={story.coverImage}
-                      alt={story.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition"
-                    />
-                  </div>
-                  <h3 className="font-medium text-sm line-clamp-2">{story.title}</h3>
-                  <div className="text-xs text-text-dim">
-                    {formatNumber(story.stats.reads)} läsningar
-                  </div>
-                </div>
-              </Link>
-            ))}
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Sparade berättelser ({savedStories.length})</h2>
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-spin w-6 h-6 border-4 border-primary border-t-transparent rounded-full" />
+              </div>
+            ) : savedStories.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4">
+                {savedStories.map((story) => (
+                  <Link key={story.id} href={`/story/${story.id}`}>
+                    <div className="space-y-2 cursor-pointer group">
+                      <div className="relative aspect-[2/3] rounded-xl overflow-hidden">
+                        <Image
+                          src={story.cover_image}
+                          alt={story.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition"
+                        />
+                      </div>
+                      <h3 className="font-medium text-sm line-clamp-2">{story.title}</h3>
+                      <div className="text-xs text-text-dim">
+                        {formatNumber(story.reads || 0)} läsningar
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-text-secondary mb-4">Inga sparade berättelser än</p>
+                <Link href="/">
+                  <button className="btn-secondary">Upptäck Berättelser</button>
+                </Link>
+              </div>
+            )}
           </div>
         )}
 
         {activeTab === 'finished' && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-2">Avklarade berättelser (2)</h2>
-            {mockStories.slice(0, 2).map((story) => (
-              <div key={story.id} className="card">
-                <div className="flex gap-4 mb-3">
-                  <Image
-                    src={story.coverImage}
-                    alt={story.title}
-                    width={60}
-                    height={90}
-                    className="rounded-lg object-cover"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-semibold mb-1">{story.title}</h3>
-                    <p className="text-sm text-text-secondary mb-2">@{story.author}</p>
-                    <div className="text-xs text-state-success">✓ Avklarad</div>
-                  </div>
-                </div>
-                <button className="w-full py-2 border border-border rounded-lg text-sm hover:bg-surface-variant transition">
-                  Hitta liknande berättelser
-                </button>
-              </div>
-            ))}
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">🏆</div>
+            <h3 className="text-lg font-semibold mb-2">Inga avklarade berättelser än</h3>
+            <p className="text-text-secondary mb-6">
+              Läs klart berättelser så visas de här
+            </p>
+            <Link href="/">
+              <button className="btn-primary">Upptäck Berättelser</button>
+            </Link>
           </div>
         )}
       </main>
@@ -128,3 +135,5 @@ export default function LibraryPage() {
     </div>
   );
 }
+
+export default withAuth(LibraryPage);
