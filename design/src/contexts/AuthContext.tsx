@@ -3,6 +3,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
 interface User {
   id: number;
   username: string;
@@ -52,23 +54,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setLoading(false);
   }, []);
+try {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
 
-  const login = async (username: string, password: string) => {
-    const response = await fetch('http://localhost:4000/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
+      const data = await response.json();
 
-    const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
 
-    if (!response.ok) {
-      throw new Error(data.error || 'Login failed');
-    }
-
-    setToken(data.token);
-    setUser(data.user);
-    if (typeof window !== 'undefined') {
+      setToken(data.token);
+      setUser(data.user);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+    } catch (error: any) {
+      // Better error handling for network issues
+      if (error.message.includes('fetch') || error.message.includes('NetworkError')) {
+        throw new Error('Cannot reach server. Please check your connection.');
+      }
+      throw error
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
     }
