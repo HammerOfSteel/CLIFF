@@ -132,7 +132,7 @@ function Home() {
     status: currentStory.status as 'ongoing' | 'completed',
     createdAt: new Date(),
     type: currentStory.type as 'text' | 'pdf',
-    pdfPath: currentStory.pdf_path,
+    pdfPath: currentStory.pdf_path ?? undefined,
   } : null;
 
   return (
