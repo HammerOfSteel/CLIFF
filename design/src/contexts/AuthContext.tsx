@@ -54,7 +54,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setLoading(false);
   }, []);
-try {
+
+  const login = async (username: string, password: string) => {
+    try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,9 +80,7 @@ try {
       if (error.message.includes('fetch') || error.message.includes('NetworkError')) {
         throw new Error('Cannot reach server. Please check your connection.');
       }
-      throw error
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      throw error;
     }
   };
 
