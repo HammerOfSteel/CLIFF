@@ -136,6 +136,8 @@ jobs:
               build:
                 context: ./design
                 dockerfile: Dockerfile
+                args:
+                  - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com/api
               container_name: cliff-frontend
               ports:
                 - "3001:3000"

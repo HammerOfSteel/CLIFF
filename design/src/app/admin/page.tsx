@@ -7,6 +7,8 @@ import BottomNav from '@/components/BottomNav';
 import { Users, UserPlus, Edit2, Trash2, X, Save, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
 interface User {
   id: number;
   username: string;
@@ -38,7 +40,7 @@ function AdminPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/admin/users', {
+      const response = await fetch(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -53,7 +55,7 @@ function AdminPage() {
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/api/admin/users', {
+      const response = await fetch(`${API_URL}/api/admin/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +79,7 @@ function AdminPage() {
     if (!editingUser) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/admin/users/${editingUser.id}`, {
+      const response = await fetch(`${API_URL}/api/admin/users/${editingUser.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +103,7 @@ function AdminPage() {
     if (!confirm('Är du säker på att du vill ta bort denna användare?')) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/admin/users/${id}`, {
+      const response = await fetch(`${API_URL}/api/admin/users/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
