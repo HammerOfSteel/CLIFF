@@ -137,6 +137,8 @@ jobs:
               container_name: cliff-frontend
               ports:
                 - "3001:3000"
+              volumes:
+                - ./design/public/pdf:/app/public/pdf:ro
               environment:
                 - NODE_ENV=production
                 - NEXT_PUBLIC_API_URL=https://cliff.dancingsalamanders.com/api
@@ -154,6 +156,10 @@ jobs:
       # ── Deploy & Restart ──────────────────────────────────────
       - name: Deploy and restart CLIFF containers
         run: |
+          # Verify PDF exists
+          echo "Checking for PDF file..."
+          ssh oracle "ls -lh ${DEPLOY_DIR}/design/public/pdf/Bloom_on_the_moon.pdf || echo '⚠️  Warning: PDF not found'"
+          
           echo "Building and restarting CLIFF containers..."
           ssh oracle "cd ${DEPLOY_DIR} && \
             sudo docker compose down && \
