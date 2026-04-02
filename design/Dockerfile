@@ -14,7 +14,6 @@ COPY next.config.js ./
 COPY postcss.config.js ./
 COPY tailwind.config.ts ./
 COPY tsconfig.json ./
-COPY next-env.d.ts ./
 
 # Copy source code
 COPY src ./src
