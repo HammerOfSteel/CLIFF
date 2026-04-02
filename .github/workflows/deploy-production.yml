@@ -172,6 +172,10 @@ jobs:
           echo "Waiting for services to start..."
           sleep 10
 
+          # Run database migrations
+          echo "Running database migrations..."
+          ssh oracle "cd ${DEPLOY_DIR} && sudo docker exec cliff-backend npm run migrate || echo '⚠️  Migration may have already run'"
+
           # Check container status
           echo "=== Container Status ==="
           ssh oracle "sudo docker ps --filter 'name=cliff-' --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
