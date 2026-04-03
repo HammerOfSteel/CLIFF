@@ -23,6 +23,11 @@ export default function StoryCard({ story, onSwipe }: StoryCardProps) {
   const [shareSuccess, setShareSuccess] = useState(false);
   const [reactionCounts, setReactionCounts] = useState(story.stats.reactions);
 
+  // Debug: Log initial reaction counts
+  useEffect(() => {
+    console.log('Initial reaction counts for story:', story.id, reactionCounts);
+  }, []);
+
   useEffect(() => {
     // Fetch user's bookmark and reaction status
     const fetchUserInteractions = async () => {
@@ -47,10 +52,19 @@ export default function StoryCard({ story, onSwipe }: StoryCardProps) {
       
       // Update local reaction counts
       const wasActive = userReactions.includes(reactionType);
-      setReactionCounts(prev => ({
-        ...prev,
-        [reactionType]: wasActive ? prev[reactionType as keyof typeof prev] - 1 : prev[reactionType as keyof typeof prev] + 1
-      }));
+      
+      setReactionCounts(prev => {
+        const key = reactionType as keyof typeof prev;
+        const currentCount = prev[key];
+        const newCount = wasActive ? Math.max(0, currentCount - 1) : currentCount + 1;
+        
+        console.log(`Reaction ${key}: ${currentCount} -> ${newCount} (wasActive: ${wasActive})`);
+        
+        return {
+          ...prev,
+          [key]: newCount
+        };
+      });
       
       // Toggle reaction in local state
       if (wasActive) {
