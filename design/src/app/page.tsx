@@ -122,11 +122,11 @@ function Home() {
     stats: {
       reads: currentStory.reads || 0,
       reactions: {
-        love: parseInt(currentStory.love_count) || 0,
-        shocked: parseInt(currentStory.shocked_count) || 0,
-        fire: parseInt(currentStory.fire_count) || 0,
-        sad: parseInt(currentStory.sad_count) || 0,
-        dead: parseInt(currentStory.dead_count) || 0,
+        love: parseInt(String(currentStory.love_count)) || 0,
+        shocked: parseInt(String(currentStory.shocked_count)) || 0,
+        fire: parseInt(String(currentStory.fire_count)) || 0,
+        sad: parseInt(String(currentStory.sad_count)) || 0,
+        dead: parseInt(String(currentStory.dead_count)) || 0,
       },
     },
     status: currentStory.status as 'ongoing' | 'completed',
