@@ -199,7 +199,7 @@ function ProfilePage() {
                     <div className="flex items-center gap-4 text-sm text-text-dim">
                       <span>{story.reads || 0} läsningar</span>
                       <span>•</span>
-                      <span>❤️ {story.love_count || 0}</span>
+                      <span>❤️ {parseInt(story.love_count as any) || 0}</span>
                     </div>
                   </div>
                 ))

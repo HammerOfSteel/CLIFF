@@ -107,11 +107,11 @@ function StoryPage() {
   const episode = story.episodes[currentEpisode];
 
   const reactions = [
-    { emoji: '❤️', count: story.love_count || 0, label: 'Love' },
-    { emoji: '😱', count: story.shocked_count || 0, label: 'Shocked' },
-    { emoji: '🔥', count: story.fire_count || 0, label: 'Fire' },
-    { emoji: '😭', count: story.sad_count || 0, label: 'Sad' },
-    { emoji: '💀', count: story.dead_count || 0, label: 'Dead' },
+    { emoji: '❤️', count: parseInt(story.love_count as any) || 0, label: 'Love' },
+    { emoji: '😱', count: parseInt(story.shocked_count as any) || 0, label: 'Shocked' },
+    { emoji: '🔥', count: parseInt(story.fire_count as any) || 0, label: 'Fire' },
+    { emoji: '😭', count: parseInt(story.sad_count as any) || 0, label: 'Sad' },
+    { emoji: '💀', count: parseInt(story.dead_count as any) || 0, label: 'Dead' },
   ];
 
   return (
