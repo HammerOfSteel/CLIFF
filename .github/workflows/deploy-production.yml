@@ -59,6 +59,13 @@ jobs:
           ssh oracle "echo '✅ SSH connection OK'"
 
       # ── Prepare deployment directory ──────────────────────────
+      - name: Clean up old Docker resources
+        run: |
+          echo "Cleaning up Docker resources to free space..."
+          ssh oracle "sudo docker image prune -a -f --filter 'until=24h' || true"
+          ssh oracle "sudo docker builder prune -f || true"
+          echo "✅ Cleanup complete"
+
       - name: Prepare server deployment directory
         run: |
           echo "Creating deployment directory structure..."
