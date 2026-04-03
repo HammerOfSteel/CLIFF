@@ -21,6 +21,7 @@ export default function StoryCard({ story, onSwipe }: StoryCardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [userReactions, setUserReactions] = useState<string[]>([]);
   const [shareSuccess, setShareSuccess] = useState(false);
+  const [reactionCounts, setReactionCounts] = useState(story.stats.reactions);
 
   useEffect(() => {
     // Fetch user's bookmark and reaction status
@@ -43,8 +44,16 @@ export default function StoryCard({ story, onSwipe }: StoryCardProps) {
   const handleReaction = async (reactionType: string) => {
     try {
       await interactionsApi.addReaction(parseInt(story.id), reactionType);
+      
+      // Update local reaction counts
+      const wasActive = userReactions.includes(reactionType);
+      setReactionCounts(prev => ({
+        ...prev,
+        [reactionType]: wasActive ? prev[reactionType as keyof typeof prev] - 1 : prev[reactionType as keyof typeof prev] + 1
+      }));
+      
       // Toggle reaction in local state
-      if (userReactions.includes(reactionType)) {
+      if (wasActive) {
         setUserReactions(userReactions.filter(r => r !== reactionType));
       } else {
         setUserReactions([...userReactions, reactionType]);
@@ -97,7 +106,7 @@ export default function StoryCard({ story, onSwipe }: StoryCardProps) {
     }
   };
 
-  const totalReactions = Object.values(story.stats.reactions).reduce((a, b) => a + b, 0);
+  const totalReactions = Object.values(reactionCounts).reduce((a, b) => a + b, 0);
 
   return (
     <div
