@@ -53,12 +53,12 @@ export default function StoryCard({ story, onSwipe }: StoryCardProps) {
         const currentCount = prev[key];
         const newCount = wasActive ? Math.max(0, currentCount - 1) : currentCount + 1;
         
-        console.log(`Reaction ${key}: ${currentCount} -> ${newCount} (wasActive: ${wasActive})`);
-        
         return {
           ...prev,
           [key]: newCount
-        
+        };
+      });
+      
       // Toggle reaction in local state
       if (wasActive) {
         setUserReactions(userReactions.filter(r => r !== reactionType));
