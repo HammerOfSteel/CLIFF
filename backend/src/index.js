@@ -14,7 +14,13 @@ const PORT = process.env.PORT || 4000;
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://cliff.dancingsalamanders.com', 'http://localhost:3000', 'http://localhost:3001']
+    ? [
+        'https://cliff.dancingsalamanders.com',
+        'https://cliffreader.se',
+        'https://www.cliffreader.se',
+        'http://localhost:3000',
+        'http://localhost:3001'
+      ]
     : true,
   credentials: true,
 }));
