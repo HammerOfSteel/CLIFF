@@ -28,4 +28,12 @@
   .story-content {
     @apply font-serif text-lg leading-relaxed text-text-primary;
   }
+  
+  .story-content p {
+    @apply mb-6;
+  }
+  
+  .story-content p:last-child {
+    @apply mb-0;
+  }
 }
