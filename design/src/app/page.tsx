@@ -37,6 +37,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -62,16 +63,46 @@ function Home() {
   };
 
   const handleSwipe = (newDirection: number) => {
+    if (isScrolling) return; // Prevent rapid scrolling
+    
     setDirection(newDirection);
+    setIsScrolling(true);
+    
     if (newDirection > 0) {
-      // Swipe up - next story
+      // Scroll down - next story
       setCurrentIndex(currentIndex + 1);
     } else if (newDirection < 0 && currentIndex > 0) {
-      // Swipe down - previous story (only if not at start)
+      // Scroll up - previous story (only if not at start)
       setCurrentIndex(currentIndex - 1);
     }
+    
+    // Reset scrolling flag after animation
+    setTimeout(() => setIsScrolling(false), 500);
   };
 
+  // Scroll-based navigation (like TikTok)
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      
+      if (isScrolling) return;
+      
+      const threshold = 50; // Minimum scroll distance
+      
+      if (Math.abs(e.deltaY) > threshold) {
+        if (e.deltaY > 0) {
+          handleSwipe(1); // Scroll down = next story
+        } else {
+          handleSwipe(-1); // Scroll up = previous story
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [currentIndex, isScrolling]);
+
+  // Keep keyboard support as backup
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       handleSwipe(1);
@@ -160,9 +191,9 @@ function Home() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Swipe Indicator */}
+      {/* Scroll Indicator */}
       <div className="absolute top-4 right-4 z-20 text-text-dim text-sm flex flex-col items-center gap-1">
-        <div className="text-xs opacity-70">↑↓ Swipe</div>
+        <div className="text-xs opacity-70">Scroll to navigate</div>
         <div className="text-xs">{storyPosition} / {stories.length}</div>
         <div className="text-xs opacity-50">Endless 🔄</div>
       </div>
