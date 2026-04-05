@@ -169,37 +169,40 @@ function Home() {
 
   return (
     <main 
-      className="h-screen w-screen overflow-hidden relative"
+      className="h-screen w-screen overflow-hidden relative bg-black"
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
-      <AnimatePresence mode="wait" initial={false} custom={direction}>
-        <motion.div
-          key={currentIndex}
-          custom={direction}
-          initial={{ y: direction > 0 ? '100%' : '-100%', opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: direction > 0 ? '-100%' : '100%', opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="absolute inset-0"
-        >
-          {transformedStory && (
-            <StoryCard 
-              story={transformedStory} 
-              onSwipe={handleSwipe}
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
+      {/* Center container for wide screens (like TikTok) */}
+      <div className="h-full w-full max-w-2xl mx-auto relative bg-background">
+        <AnimatePresence mode="wait" initial={false} custom={direction}>
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            initial={{ y: direction > 0 ? '100%' : '-100%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: direction > 0 ? '-100%' : '100%', opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="absolute inset-0"
+          >
+            {transformedStory && (
+              <StoryCard 
+                story={transformedStory} 
+                onSwipe={handleSwipe}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
 
-      {/* Scroll Indicator */}
-      <div className="absolute top-4 right-4 z-20 text-text-dim text-sm flex flex-col items-center gap-1">
-        <div className="text-xs opacity-70">Scroll to navigate</div>
-        <div className="text-xs">{storyPosition} / {stories.length}</div>
-        <div className="text-xs opacity-50">Endless 🔄</div>
+        {/* Scroll Indicator */}
+        <div className="absolute top-4 right-4 z-20 text-text-dim text-sm flex flex-col items-center gap-1">
+          <div className="text-xs opacity-70">Scroll to navigate</div>
+          <div className="text-xs">{storyPosition} / {stories.length}</div>
+          <div className="text-xs opacity-50">Endless 🔄</div>
+        </div>
+
+        <BottomNav activeTab="discover" />
       </div>
-
-      <BottomNav activeTab="discover" />
     </main>
   );
 }

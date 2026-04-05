@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { storiesApi } from '@/lib/api';
 import BottomNav from '@/components/BottomNav';
@@ -9,6 +9,7 @@ import { PenTool, Image as ImageIcon, Bold, Italic, List, ArrowLeft } from 'luci
 
 function CreatePage() {
   const router = useRouter();
+  const contentRef = useRef<HTMLTextAreaElement>(null);
   const [title, setTitle] = useState('');
   const [hook, setHook] = useState('');
   const [genre, setGenre] = useState('');
@@ -20,6 +21,63 @@ function CreatePage() {
   // Calculate word count and read time
   const wordCount = content.trim().split(/\s+/).filter(word => word.length > 0).length;
   const readTime = Math.max(1, Math.ceil(wordCount / 200)); // Assuming 200 words/min
+
+  // Formatting functions
+  const insertFormatting = (before: string, after: string = '') => {
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    const beforeText = content.substring(0, start);
+    const afterText = content.substring(end);
+
+    const newText = beforeText + before + selectedText + after + afterText;
+    setContent(newText);
+
+    // Reset cursor position
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + before.length + selectedText.length + after.length;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
+
+  const handleBold = () => {
+    insertFormatting('**', '**');
+  };
+
+  const handleItalic = () => {
+    insertFormatting('*', '*');
+  };
+
+  const handleList = () => {
+    const textarea = contentRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const beforeText = content.substring(0, start);
+    const afterText = content.substring(start);
+
+    // Check if we're at the start of a line
+    const lastNewline = beforeText.lastIndexOf('\n');
+    const isStartOfLine = lastNewline === beforeText.length - 1 || beforeText.length === 0;
+
+    if (isStartOfLine) {
+      setContent(beforeText + '- ' + afterText);
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start + 2, start + 2);
+      }, 0);
+    } else {
+      setContent(beforeText + '\n- ' + afterText);
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start + 3, start + 3);
+      }, 0);
+    }
+  };
 
   const handlePublish = async () => {
     if (!title.trim()) {
@@ -167,27 +225,50 @@ function CreatePage() {
 
           {/* Markdown Toolbar */}
           <div className="flex gap-2 mb-2">
-            <button className="p-2 hover:bg-surface-variant rounded transition">
+            <button 
+              onClick={handleBold}
+              type="button"
+              className="p-2 hover:bg-surface-variant rounded transition"
+              title="Fetstil (Ctrl+B)"
+            >
               <Bold className="w-4 h-4" />
             </button>
-            <button className="p-2 hover:bg-surface-variant rounded transition">
+            <button 
+              onClick={handleItalic}
+              type="button"
+              className="p-2 hover:bg-surface-variant rounded transition"
+              title="Kursiv (Ctrl+I)"
+            >
               <Italic className="w-4 h-4" />
             </button>
-            <button className="p-2 hover:bg-surface-variant rounded transition">
+            <button 
+              onClick={handleList}
+              type="button"
+              className="p-2 hover:bg-surface-variant rounded transition"
+              title="Lista"
+            >
               <List className="w-4 h-4" />
             </button>
-            <button className="p-2 hover:bg-surface-variant rounded transition">
-              <ImageIcon className="w-4 h-4" />
+            <button 
+              type="button"
+              className="p-2 hover:bg-surface-variant rounded transition"
+              disabled
+              title="Bild (kommer snart)"
+            >
+              <ImageIcon className="w-4 h-4 opacity-50" />
             </button>
           </div>
 
           <textarea
+            ref={contentRef}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Det började med...
 
-Skriv din berättelse här. Håll kapitlen korta (3-5 minuter läsning) och avsluta med en cliffhanger!"
-            className="w-full bg-surface border border-border rounded-xl px-4 py-3 min-h-[400px] resize-none focus:border-primary focus:outline-none transition"
+Skriv din berättelse här. Håll kapitlen korta (3-5 minuter läsning) och avsluta med en cliffhanger!
+
+**Fetstil**, *kursiv*, - listor"
+            className="w-full bg-surface border border-border rounded-xl px-4 py-3 min-h-[400px] resize-none focus:border-primary focus:outline-none transition font-mono text-sm"
           />
         </div>
 
@@ -208,6 +289,15 @@ Skriv din berättelse här. Håll kapitlen korta (3-5 minuter läsning) och avsl
             <li>Avsluta med en cliffhanger för att hålla läsarna engagerade</li>
             <li>Använd dialog för att göra berättelsen levande</li>
             <li>Visa, berätta inte - använd sinnliga detaljer</li>
+          </ul>
+        </div>
+
+        <div className="card">
+          <h3 className="font-semibold mb-2">📝 Formatering</h3>
+          <ul className="text-sm text-text-secondary space-y-1">
+            <li>**fetstil** = <strong>fetstil</strong></li>
+            <li>*kursiv* = <em>kursiv</em></li>
+            <li>- Lista för punktlistor</li>
           </ul>
         </div>
       </main>

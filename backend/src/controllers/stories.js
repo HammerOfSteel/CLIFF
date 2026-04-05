@@ -147,4 +147,83 @@ const getUserStories = async (req, res) => {
   }
 };
 
-module.exports = { getAllStories, getStoryById, createStory, createEpisode, getUserStories };
+const updateStory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, hook, genre, cover_image, status, type, pdf_path, audio_url } = req.body;
+
+    // Verify story exists and belongs to user
+    const storyCheck = await db.query(
+      'SELECT * FROM stories WHERE id = $1 AND author_id = $2',
+      [id, req.user.id]
+    );
+
+    if (storyCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Story not found or unauthorized' });
+    }
+
+    const result = await db.query(`
+      UPDATE stories 
+      SET title = COALESCE($1, title),
+          hook = COALESCE($2, hook),
+          genre = COALESCE($3, genre),
+          cover_image = COALESCE($4, cover_image),
+          status = COALESCE($5, status),
+          type = COALESCE($6, type),
+          pdf_path = COALESCE($7, pdf_path),
+          audio_url = COALESCE($8, audio_url),
+          updated_at = NOW()
+      WHERE id = $9
+      RETURNING *
+    `, [title, hook, genre, cover_image, status, type, pdf_path, audio_url, id]);
+
+    res.json({ story: result.rows[0] });
+  } catch (error) {
+    console.error('Update story error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+const updateEpisode = async (req, res) => {
+  try {
+    const { story_id, episode_id } = req.params;
+    const { title, content, read_time } = req.body;
+
+    // Verify story exists and belongs to user
+    const storyCheck = await db.query(
+      'SELECT * FROM stories WHERE id = $1 AND author_id = $2',
+      [story_id, req.user.id]
+    );
+
+    if (storyCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Story not found or unauthorized' });
+    }
+
+    // Verify episode exists and belongs to this story
+    const episodeCheck = await db.query(
+      'SELECT * FROM episodes WHERE id = $1 AND story_id = $2',
+      [episode_id, story_id]
+    );
+
+    if (episodeCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Episode not found' });
+    }
+
+    const result = await db.query(`
+      UPDATE episodes
+      SET title = COALESCE($1, title),
+          content = COALESCE($2, content),
+          read_time = COALESCE($3, read_time),
+          updated_at = NOW()
+      WHERE id = $4
+      RETURNING *
+    `, [title, content, read_time, episode_id]);
+
+    res.json({ episode: result.rows[0] });
+  } catch (error) {
+    console.error('Update episode error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+module.exports = { getAllStories, getStoryById, createStory, createEpisode, getUserStories, updateStory, updateEpisode };

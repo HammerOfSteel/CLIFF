@@ -82,6 +82,28 @@ export const storiesApi = {
     const data = await response.json();
     return data.episode;
   },
+
+  updateStory: async (storyId: string, storyData: any) => {
+    const response = await fetch(`${API_URL}/api/stories/${storyId}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(storyData),
+    });
+    if (!response.ok) throw new Error('Failed to update story');
+    const data = await response.json();
+    return data.story;
+  },
+
+  updateEpisode: async (storyId: string, episodeId: string, episodeData: any) => {
+    const response = await fetch(`${API_URL}/api/stories/${storyId}/episodes/${episodeId}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(episodeData),
+    });
+    if (!response.ok) throw new Error('Failed to update episode');
+    const data = await response.json();
+    return data.episode;
+  },
 };
 
 // Admin API

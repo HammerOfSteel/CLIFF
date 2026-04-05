@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { storiesApi } from '@/lib/api';
 import withAuth from '@/components/withAuth';
 import BottomNav from '@/components/BottomNav';
-import { Settings, Share2, Flame, BookOpen, Award, LogOut, Shield } from 'lucide-react';
+import { Settings, Share2, Flame, BookOpen, Award, LogOut, Shield, Edit } from 'lucide-react';
 import Link from 'next/link';
 
 function ProfilePage() {
@@ -190,16 +190,25 @@ function ProfilePage() {
               {userStories.length > 0 ? (
                 userStories.slice(0, 3).map((story) => (
                   <div key={story.id} className="border-b border-border pb-4 last:border-0 last:pb-0">
-                    <Link href={`/story/${story.id}`}>
-                      <h4 className="font-semibold mb-1 hover:text-primary transition">{story.title}</h4>
-                    </Link>
-                    <p className="text-sm text-text-secondary mb-2">
-                      {story.episode_count} episoder • {story.status === 'ongoing' ? 'Pågående' : 'Avslutad'}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-text-dim">
-                      <span>{story.reads || 0} läsningar</span>
-                      <span>•</span>
-                      <span>❤️ {parseInt(story.love_count as any) || 0}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <Link href={`/story/${story.id}`}>
+                          <h4 className="font-semibold mb-1 hover:text-primary transition">{story.title}</h4>
+                        </Link>
+                        <p className="text-sm text-text-secondary mb-2">
+                          {story.episode_count} episoder • {story.status === 'ongoing' ? 'Pågående' : 'Avslutad'}
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-text-dim">
+                          <span>{story.reads || 0} läsningar</span>
+                          <span>•</span>
+                          <span>❤️ {parseInt(story.love_count as any) || 0}</span>
+                        </div>
+                      </div>
+                      <Link href={`/story/${story.id}/edit`}>
+                        <button className="p-2 hover:bg-surface-variant rounded-lg transition text-text-dim hover:text-primary">
+                          <Edit className="w-4 h-4" />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 ))
