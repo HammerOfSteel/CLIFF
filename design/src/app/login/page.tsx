@@ -136,7 +136,7 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl bg-surface-variant border border-border focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
-                  placeholder="admin eller user"
+                  placeholder="Användarnamn"
                   required
                 />
               </div>
@@ -197,16 +197,6 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Helper Text */}
-            <div className="mt-6 pt-6 border-t border-border">
-              <p className="text-xs text-text-dim text-center">
-                <strong className="text-text-secondary">Demo-konton:</strong>
-                <br />
-                admin / admin123! (full åtkomst)
-                <br />
-                user / user123! (standardanvändare)
-              </p>
-            </div>
           </motion.div>
 
           {/* Background indicator */}
