@@ -187,3 +187,25 @@ export const interactionsApi = {
     return data.bookmarked;
   },
 };
+
+// Audio API
+export const audioApi = {
+  saveProgress: async (storyId: number, audioPosition: number) => {
+    const response = await fetch(`${API_URL}/api/audio/progress`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ story_id: storyId, audio_position: audioPosition }),
+    });
+    if (!response.ok) throw new Error('Failed to save audio progress');
+    return response.json();
+  },
+
+  getProgress: async (storyId: number) => {
+    const response = await fetch(`${API_URL}/api/audio/progress/${storyId}`, {
+      headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch audio progress');
+    const data = await response.json();
+    return data;
+  },
+};

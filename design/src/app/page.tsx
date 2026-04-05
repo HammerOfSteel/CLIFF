@@ -20,6 +20,7 @@ interface Story {
   status: string;
   type: string;
   pdf_path: string | null;
+  audio_url: string | null;
   reads: number;
   love_count: number;
   shocked_count: number;

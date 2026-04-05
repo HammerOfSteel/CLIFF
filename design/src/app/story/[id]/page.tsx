@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { storiesApi } from '@/lib/api';
+import { storiesApi, audioApi } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import PDFViewer from '@/components/PDFViewer';
+import AudioPlayer from '@/components/AudioPlayer';
 import BottomNav from '@/components/BottomNav';
 import withAuth from '@/components/withAuth';
 import { ArrowLeft, ChevronDown, Heart, Share2, Eye, Flame } from 'lucide-react';
@@ -18,6 +19,7 @@ function StoryPage() {
   const [story, setStory] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [audioPosition, setAudioPosition] = useState(0);
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -25,6 +27,16 @@ function StoryPage() {
         setLoading(true);
         const data = await storiesApi.getById(params.id as string);
         setStory(data);
+        
+        // If story has audio, fetch the progress
+        if (data.audio_url) {
+          try {
+            const progressData = await audioApi.getProgress(Number(params.id));
+            setAudioPosition(progressData.audio_position || 0);
+          } catch (err) {
+            console.error('Error fetching audio progress:', err);
+          }
+        }
       } catch (err: any) {
         console.error('Error fetching story:', err);
         setError(err.message || 'Failed to load story');
@@ -37,6 +49,15 @@ function StoryPage() {
       fetchStory();
     }
   }, [params.id]);
+
+  const handleAudioProgressUpdate = async (position: number) => {
+    try {
+      await audioApi.saveProgress(Number(params.id), position);
+      setAudioPosition(position);
+    } catch (err) {
+      console.error('Error saving audio progress:', err);
+    }
+  };
 
   if (loading) {
     return (
@@ -155,6 +176,19 @@ function StoryPage() {
             <span>{formatNumber(story.reads || 0)} läsningar</span>
           </div>
         </div>
+
+        {/* Audio Player - only show if story has audio */}
+        {story.audio_url && (
+          <div className="mb-8">
+            <AudioPlayer
+              audioUrl={story.audio_url}
+              storyId={story.id}
+              storyTitle={story.title}
+              onProgressUpdate={handleAudioProgressUpdate}
+              initialPosition={audioPosition}
+            />
+          </div>
+        )}
 
         <article className="story-content mb-12">
           <ReactMarkdown>{episode.content}</ReactMarkdown>

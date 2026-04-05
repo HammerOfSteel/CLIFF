@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const storiesRoutes = require('./routes/stories');
 const adminRoutes = require('./routes/admin');
 const interactionsRoutes = require('./routes/interactions');
+const audioRoutes = require('./routes/audio');
 const { createTables } = require('./db/migrate');
 
 const app = express();
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/stories', storiesRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/interactions', interactionsRoutes);
+app.use('/api/audio', audioRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
