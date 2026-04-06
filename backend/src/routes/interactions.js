@@ -4,7 +4,10 @@ const {
   getUserReaction, 
   addBookmark, 
   getBookmarks,
-  isBookmarked 
+  isBookmarked,
+  saveReadingProgress,
+  getReadingProgress,
+  getFinishedStories
 } = require('../controllers/interactions');
 const { authMiddleware } = require('../middleware/auth');
 
@@ -18,5 +21,10 @@ router.get('/reactions/:story_id', authMiddleware, getUserReaction);
 router.post('/bookmarks', authMiddleware, addBookmark);
 router.get('/bookmarks', authMiddleware, getBookmarks);
 router.get('/bookmarks/:story_id', authMiddleware, isBookmarked);
+
+// Reading Progress
+router.post('/reading-progress', authMiddleware, saveReadingProgress);
+router.get('/reading-progress', authMiddleware, getReadingProgress);
+router.get('/finished-stories', authMiddleware, getFinishedStories);
 
 module.exports = router;

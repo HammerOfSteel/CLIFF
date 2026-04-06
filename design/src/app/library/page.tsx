@@ -10,25 +10,33 @@ import Link from 'next/link';
 
 function LibraryPage() {
   const [activeTab, setActiveTab] = useState<'reading' | 'saved' | 'finished'>('reading');
+  const [readingStories, setReadingStories] = useState<any[]>([]);
   const [savedStories, setSavedStories] = useState<any[]>([]);
+  const [finishedStories, setFinishedStories] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchSavedStories = async () => {
-      if (activeTab === 'saved') {
-        setLoading(true);
-        try {
+    const fetchStories = async () => {
+      setLoading(true);
+      try {
+        if (activeTab === 'reading') {
+          const stories = await interactionsApi.getReadingProgress();
+          setReadingStories(stories);
+        } else if (activeTab === 'saved') {
           const stories = await interactionsApi.getBookmarks();
           setSavedStories(stories);
-        } catch (error) {
-          console.error('Error fetching bookmarks:', error);
-        } finally {
-          setLoading(false);
+        } else if (activeTab === 'finished') {
+          const stories = await interactionsApi.getFinishedStories();
+          setFinishedStories(stories);
         }
+      } catch (error) {
+        console.error('Error fetching stories:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchSavedStories();
+    fetchStories();
   }, [activeTab]);
 
   const tabs = [
@@ -36,6 +44,67 @@ function LibraryPage() {
     { id: 'saved', label: 'Sparade' },
     { id: 'finished', label: 'Avklarade' },
   ] as const;
+
+  const renderStoryGrid = (stories: any[], emptyMessage: string, emptyIcon: string) => {
+    if (loading) {
+      return (
+        <div className="flex justify-center py-8">
+          <div className="animate-spin w-6 h-6 border-4 border-primary border-t-transparent rounded-full" />
+        </div>
+      );
+    }
+
+    if (stories.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">{emptyIcon}</div>
+          <h3 className="text-lg font-semibold mb-2">{emptyMessage}</h3>
+          <p className="text-text-secondary mb-6">
+            {activeTab === 'reading' ? 'Börja läsa berättelser så visas de här' : 
+             activeTab === 'saved' ? 'Spara berättelser så visas de här' :
+             'Läs klart berättelser så visas de här'}
+          </p>
+          <Link href="/">
+            <button className="btn-primary">Upptäck Berättelser</button>
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        {stories.map((story) => (
+          <Link key={story.id} href={`/story/${story.id}`}>
+            <div className="space-y-2 cursor-pointer group">
+              <div className="relative aspect-[2/3] rounded-xl overflow-hidden">
+                <Image
+                  src={story.cover_image}
+                  alt={story.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition"
+                />
+                {activeTab === 'reading' && story.progress_percentage && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/50">
+                    <div 
+                      className="h-full bg-primary"
+                      style={{ width: `${story.progress_percentage}%` }}
+                    />
+                  </div>
+                )}
+              </div>
+              <h3 className="font-medium text-sm line-clamp-2">{story.title}</h3>
+              <div className="text-xs text-text-dim">
+                {activeTab === 'reading' && story.progress_percentage ? 
+                  `${Math.round(story.progress_percentage)}% avklarat` :
+                  `${formatNumber(story.reads || 0)} läsningar`
+                }
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -66,67 +135,23 @@ function LibraryPage() {
       {/* Content */}
       <main className="p-4">
         {activeTab === 'reading' && (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">📚</div>
-            <h3 className="text-lg font-semibold mb-2">Ingen läshistorik än</h3>
-            <p className="text-text-secondary mb-6">
-              Börja läsa berättelser så visas de här
-            </p>
-            <Link href="/">
-              <button className="btn-primary">Upptäck Berättelser</button>
-            </Link>
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Läser nu ({readingStories.length})</h2>
+            {renderStoryGrid(readingStories, 'Ingen läshistorik än', '📚')}
           </div>
         )}
 
         {activeTab === 'saved' && (
           <div>
             <h2 className="text-lg font-semibold mb-4">Sparade berättelser ({savedStories.length})</h2>
-            {loading ? (
-              <div className="flex justify-center py-8">
-                <div className="animate-spin w-6 h-6 border-4 border-primary border-t-transparent rounded-full" />
-              </div>
-            ) : savedStories.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4">
-                {savedStories.map((story) => (
-                  <Link key={story.id} href={`/story/${story.id}`}>
-                    <div className="space-y-2 cursor-pointer group">
-                      <div className="relative aspect-[2/3] rounded-xl overflow-hidden">
-                        <Image
-                          src={story.cover_image}
-                          alt={story.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition"
-                        />
-                      </div>
-                      <h3 className="font-medium text-sm line-clamp-2">{story.title}</h3>
-                      <div className="text-xs text-text-dim">
-                        {formatNumber(story.reads || 0)} läsningar
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-text-secondary mb-4">Inga sparade berättelser än</p>
-                <Link href="/">
-                  <button className="btn-secondary">Upptäck Berättelser</button>
-                </Link>
-              </div>
-            )}
+            {renderStoryGrid(savedStories, 'Inga sparade berättelser än', '🔖')}
           </div>
         )}
 
         {activeTab === 'finished' && (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">🏆</div>
-            <h3 className="text-lg font-semibold mb-2">Inga avklarade berättelser än</h3>
-            <p className="text-text-secondary mb-6">
-              Läs klart berättelser så visas de här
-            </p>
-            <Link href="/">
-              <button className="btn-primary">Upptäck Berättelser</button>
-            </Link>
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Avklarade ({finishedStories.length})</h2>
+            {renderStoryGrid(finishedStories, 'Inga avklarade berättelser än', '🏆')}
           </div>
         )}
       </main>

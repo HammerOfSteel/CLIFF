@@ -208,6 +208,39 @@ export const interactionsApi = {
     const data = await response.json();
     return data.bookmarked;
   },
+
+  saveReadingProgress: async (storyId: number, episodeId: number, progressPercentage: number, scrollPosition: number) => {
+    const response = await fetch(`${API_URL}/api/interactions/reading-progress`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ 
+        story_id: storyId, 
+        episode_id: episodeId, 
+        progress_percentage: progressPercentage,
+        scroll_position: scrollPosition
+      }),
+    });
+    if (!response.ok) throw new Error('Failed to save reading progress');
+    return response.json();
+  },
+
+  getReadingProgress: async () => {
+    const response = await fetch(`${API_URL}/api/interactions/reading-progress`, {
+      headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch reading progress');
+    const data = await response.json();
+    return data.stories;
+  },
+
+  getFinishedStories: async () => {
+    const response = await fetch(`${API_URL}/api/interactions/finished-stories`, {
+      headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch finished stories');
+    const data = await response.json();
+    return data.stories;
+  },
 };
 
 // Audio API
@@ -229,5 +262,17 @@ export const audioApi = {
     if (!response.ok) throw new Error('Failed to fetch audio progress');
     const data = await response.json();
     return data;
+  },
+};
+
+// Stats API
+export const statsApi = {
+  getUserStats: async () => {
+    const response = await fetch(`${API_URL}/api/stats/user-stats`, {
+      headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch user stats');
+    const data = await response.json();
+    return data.stats;
   },
 };

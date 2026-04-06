@@ -165,9 +165,11 @@ function ProfilePage() {
             ))}
           </div>
 
-          <button className="w-full mt-4 text-sm text-primary hover:underline">
-            Visa alla prestationer →
-          </button>
+          <Link href="/achievements">
+            <button className="w-full mt-4 text-sm text-primary hover:underline">
+              Visa alla prestationer →
+            </button>
+          </Link>
         </div>
 
         {/* My Stories */}
@@ -175,9 +177,11 @@ function ProfilePage() {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">✍️ Mina Berättelser</h3>
             {userStories.length > 0 && (
-              <button className="text-sm text-primary hover:underline">
-                Se alla →
-              </button>
+              <Link href="/my-stories">
+                <button className="text-sm text-primary hover:underline">
+                  Se alla →
+                </button>
+              </Link>
             )}
           </div>
 
@@ -229,12 +233,16 @@ function ProfilePage() {
 
         {/* Settings */}
         <div className="border-t border-border p-6 space-y-2">
-          <button className="w-full text-left py-3 px-4 hover:bg-surface rounded-lg transition">
-            Inställningar
-          </button>
-          <button className="w-full text-left py-3 px-4 hover:bg-surface rounded-lg transition">
-            Hjälp & Support
-          </button>
+          <Link href="/settings">
+            <button className="w-full text-left py-3 px-4 hover:bg-surface rounded-lg transition">
+              Inställningar
+            </button>
+          </Link>
+          <Link href="/help">
+            <button className="w-full text-left py-3 px-4 hover:bg-surface rounded-lg transition">
+              Hjälp & Support
+            </button>
+          </Link>
         </div>
       </main>
 

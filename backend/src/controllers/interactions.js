@@ -146,10 +146,97 @@ const isBookmarked = async (req, res) => {
   }
 };
 
+// Save reading progress
+const saveReadingProgress = async (req, res) => {
+  try {
+    const { story_id, episode_id, progress_percentage, scroll_position } = req.body;
+    const user_id = req.user.id;
+
+    if (!story_id || !episode_id) {
+      return res.status(400).json({ error: 'Story ID and episode ID are required' });
+    }
+
+    await db.query(`
+      INSERT INTO reading_progress (user_id, story_id, episode_id, progress_percentage, scroll_position, last_read_at)
+      VALUES ($1, $2, $3, $4, $5, NOW())
+      ON CONFLICT (user_id, story_id, episode_id)
+      DO UPDATE SET 
+        progress_percentage = $4,
+        scroll_position = $5,
+        last_read_at = NOW()
+    `, [user_id, story_id, episode_id, progress_percentage || 0, scroll_position || 0]);
+
+    res.json({ message: 'Progress saved' });
+  } catch (error) {
+    console.error('Save reading progress error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Get user's currently reading stories
+const getReadingProgress = async (req, res) => {
+  try {
+    const user_id = req.user.id;
+
+    const result = await db.query(`
+      SELECT DISTINCT ON (rp.story_id)
+        s.*,
+        u.username as author,
+        u.avatar_url as author_avatar,
+        rp.episode_id,
+        rp.progress_percentage,
+        rp.last_read_at,
+        (SELECT COUNT(*) FROM episodes WHERE story_id = s.id) as episode_count,
+        (SELECT COUNT(*) FROM reactions WHERE story_id = s.id AND reaction_type = 'love') as love_count
+      FROM reading_progress rp
+      JOIN stories s ON rp.story_id = s.id
+      JOIN users u ON s.author_id = u.id
+      WHERE rp.user_id = $1 AND rp.progress_percentage < 100
+      ORDER BY rp.story_id, rp.last_read_at DESC
+    `, [user_id]);
+
+    res.json({ stories: result.rows });
+  } catch (error) {
+    console.error('Get reading progress error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Get finished stories
+const getFinishedStories = async (req, res) => {
+  try {
+    const user_id = req.user.id;
+
+    const result = await db.query(`
+      SELECT DISTINCT
+        s.*,
+        u.username as author,
+        u.avatar_url as author_avatar,
+        MAX(rp.last_read_at) as finished_at,
+        (SELECT COUNT(*) FROM episodes WHERE story_id = s.id) as episode_count,
+        (SELECT COUNT(*) FROM reactions WHERE story_id = s.id AND reaction_type = 'love') as love_count
+      FROM reading_progress rp
+      JOIN stories s ON rp.story_id = s.id
+      JOIN users u ON s.author_id = u.id
+      WHERE rp.user_id = $1 AND rp.progress_percentage = 100
+      GROUP BY s.id, u.username, u.avatar_url
+      ORDER BY finished_at DESC
+    `, [user_id]);
+
+    res.json({ stories: result.rows });
+  } catch (error) {
+    console.error('Get finished stories error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 module.exports = { 
   addReaction, 
   getUserReaction, 
   addBookmark, 
   getBookmarks,
-  isBookmarked 
+  isBookmarked,
+  saveReadingProgress,
+  getReadingProgress,
+  getFinishedStories
 };

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { storiesApi, audioApi } from '@/lib/api';
+import { storiesApi, audioApi, interactionsApi } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import PDFViewer from '@/components/PDFViewer';
 import AudioPlayer from '@/components/AudioPlayer';
@@ -20,6 +20,27 @@ function StoryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [audioPosition, setAudioPosition] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const saveProgressTimeoutRef = useRef<NodeJS.Timeout>();
+
+  // Save reading progress
+  const saveReadingProgress = async (episodeIndex: number, scrollPosition: number = 0) => {
+    if (!story || !story.episodes || !story.episodes[episodeIndex]) return;
+
+    try {
+      const episode = story.episodes[episodeIndex];
+      const progressPercentage = Math.min(100, Math.round(((episodeIndex + 1) / story.episodes.length) * 100));
+      
+      await interactionsApi.saveReadingProgress(
+        parseInt(params.id as string),
+        episode.id,
+        progressPercentage,
+        scrollPosition
+      );
+    } catch (err) {
+      console.error('Error saving reading progress:', err);
+    }
+  };
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -37,6 +58,11 @@ function StoryPage() {
             console.error('Error fetching audio progress:', err);
           }
         }
+
+        // Save initial reading progress (user opened the story)
+        if (data.episodes && data.episodes.length > 0) {
+          await saveReadingProgress(0);
+        }
       } catch (err: any) {
         console.error('Error fetching story:', err);
         setError(err.message || 'Failed to load story');
@@ -49,6 +75,22 @@ function StoryPage() {
       fetchStory();
     }
   }, [params.id]);
+
+  // Track episode changes
+  useEffect(() => {
+    if (story && currentEpisode >= 0) {
+      saveReadingProgress(currentEpisode);
+    }
+  }, [currentEpisode, story]);
+
+  // Save progress on unmount
+  useEffect(() => {
+    return () => {
+      if (saveProgressTimeoutRef.current) {
+        clearTimeout(saveProgressTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleAudioProgressUpdate = async (position: number) => {
     try {
