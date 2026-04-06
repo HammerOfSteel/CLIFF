@@ -1,203 +1,311 @@
-# CLIFF – Technical Implementation TODO
+# CLIFF – Development Progress & TODO
 
-**Tech Stack:** Flutter 3.x + Firebase  
-**Target Platforms:** iOS & Android (Web as Phase 2)  
-**Timeline:** 6 months to Beta Launch  
-
----
-
-## 📋 Pre-Development Setup (Week 1-2)
-
-### Design & Planning
-- [ ] Finalize design system in Figma (colors, typography, components)
-- [ ] Create high-fidelity mockups for 10-12 key screens
-  - [ ] Splash screen
-  - [ ] Onboarding (3-4 slides)
-  - [ ] Login/Signup
-  - [ ] Discover feed (vertical swipe)
-  - [ ] Story reader
-  - [ ] Creator editor
-  - [ ] Library
-  - [ ] Profile
-  - [ ] Settings
-- [ ] Design flow diagrams (user journeys)
-- [ ] Export assets (icons, illustrations, placeholders)
-
-### Development Environment
-- [ ] Set up Flutter 3.x development environment
-- [ ] Configure VS Code / Android Studio
-- [ ] Install Flutter SDK and verify
-- [ ] Set up iOS simulator and Android emulator
-- [ ] Configure Git + GitHub repository
-- [ ] Set up project structure (clean architecture)
-
-### Firebase Setup
-- [ ] Create Firebase project
-- [ ] Enable Firebase Authentication
-  - [ ] Email/Password
-  - [ ] Google Sign-In
-  - [ ] Apple Sign-In (iOS)
-- [ ] Set up Cloud Firestore database
-  - [ ] Design database schema (users, stories, episodes, etc.)
-  - [ ] Set up security rules
-- [ ] Configure Firebase Storage (for images)
-- [ ] Enable Firebase Analytics
-- [ ] Enable Firebase Cloud Messaging (push notifications)
-- [ ] Set up Firebase Cloud Functions (for later moderation)
-
-### Content Preparation
-- [ ] Source or write 30-50 seed stories
-  - [ ] 5 stories per genre: Romance, Thriller, Sci-Fi, Fantasy, Drama, LGBTQ+
-  - [ ] Each 3-5 episodes
-  - [ ] Format in Markdown
-- [ ] Create placeholder cover images
-- [ ] Prepare sample user profiles for testing
+**Tech Stack:** Next.js 14 + Express.js + PostgreSQL  
+**Target Platforms:** Web (Mobile-first, Desktop responsive)  
+**Current Status:** MVP Feature Complete - Testing Phase  
+**Live URL:** https://cliffreader.se
 
 ---
 
-## 🏗️ Phase 1: Core Foundation (Month 1-2)
+## ✅ COMPLETED - MVP Core Features
 
-### Week 1-2: Authentication & User Management
+### Infrastructure & Setup
+- ✅ Next.js 14.1.0 frontend application
+- ✅ Express.js backend API server
+- ✅ PostgreSQL database with Docker
+- ✅ Oracle Cloud production deployment
+- ✅ Domain setup (cliffreader.se)
+- ✅ Nginx reverse proxy configuration
+- ✅ GitHub Actions CI/CD pipeline
+- ✅ Docker Compose orchestration
+- ✅ Database migrations system
 
-**User Authentication**
-- [ ] Implement Firebase Auth integration
-- [ ] Build splash screen with CLIFF logo animation
-- [ ] Create onboarding carousel (3-4 screens)
-  - [ ] Screen 1: "Discover stories in minutes"
-  - [ ] Screen 2: "New episodes every day"
-  - [ ] Screen 3: "Write your own stories"
-  - [ ] Skip/Next buttons
-- [ ] Build login screen
-  - [ ] Email/password fields with validation
-  - [ ] "Login" button
-  - [ ] "Forgot password?" link
-- [ ] Build signup screen
-  - [ ] Email, password, confirm password
-  - [ ] Terms & privacy checkbox
-  - [ ] "Create Account" button
-- [ ] Implement Google Sign-In
-- [ ] Implement Apple Sign-In (iOS only)
-- [ ] Build profile setup flow
-  - [ ] Choose avatar (preset options + upload)
-  - [ ] Enter username (unique check)
-  - [ ] Select favorite genres (3-5)
-  - [ ] Age verification (13+)
+### Authentication & User Management
+- ✅ Email/password authentication with JWT
+- ✅ Secure password hashing (bcrypt)
+- ✅ Login and signup pages
+- ✅ User session management
+- ✅ Protected routes with auth middleware
+- ✅ Admin and user roles
+- ✅ Profile page with user stats
+- ✅ Profile editing capability
+- ✅ Logout functionality
 
-**User Profile Model**
-- [ ] Create User data model (Firestore)
-- [ ] Implement user creation on signup
-- [ ] Save user preferences (genres, reading mode, font size)
-- [ ] Implement auth state management (Riverpod)
+### Story Discovery & Reading
+- ✅ TikTok-style vertical scroll discovery feed
+- ✅ Desktop responsive centered layout (max-w-2xl)
+- ✅ Full-screen story preview cards
+- ✅ Cover images with gradient overlays
+- ✅ Story metadata display (genre, episodes, read time)
+- ✅ Smooth vertical swipe navigation
+- ✅ Keyboard navigation support (arrow keys)
+- ✅ Endless scroll with story looping
+- ✅ Story detail pages with episode navigation
+- ✅ Markdown rendering for story content
+- ✅ PDF story support with viewer
+- ✅ Audio story support with player
+- ✅ Reading progress tracking
+- ✅ Auto-save reading position
+- ✅ Episode navigation (next/previous)
+- ✅ Progress indicators
 
-**Navigation**
-- [ ] Set up GoRouter for navigation
-- [ ] Implement bottom navigation bar (Discover, Library, Create, Profile)
-- [ ] Add navigation guards (auth required routes)
+### Story Creation & Editing
+- ✅ Story creation workflow
+- ✅ Episode creation
+- ✅ Markdown editor with toolbar
+- ✅ Functional formatting tools:
+  - ✅ Bold (**text**)
+  - ✅ Italic (*text*)
+  - ✅ Lists (- item)
+- ✅ Story metadata (title, hook, genre)
+- ✅ Word count and read time calculation
+- ✅ Story update/edit functionality
+- ✅ Episode editing
+- ✅ Multi-episode support
+- ✅ Edit access control (author only)
+- ✅ My Stories page (view all user stories)
+- ✅ Edit buttons in profile
 
-### Week 3-4: Discovery Feed
+### Interactions & Engagement
+- ✅ Reaction system (❤️ 😱 🔥 😭 💀)
+- ✅ Reaction counters
+- ✅ User reaction tracking
+- ✅ Bookmark/save stories
+- ✅ Bookmark toggle functionality
+- ✅ Share functionality
+- ✅ Story statistics (reads, loves)
 
-**Vertical Swipe UI**
-- [ ] Build vertical PageView controller
-- [ ] Create StoryPreviewCard widget
-  - [ ] Cover image with gradient overlay
-  - [ ] Title, author, metadata
-  - [ ] Stats (reads, reactions)
-  - [ ] CTA button "Start Reading"
-- [ ] Implement swipe gestures (up/down)
-- [ ] Add haptic feedback on swipe
-- [ ] Preload next/previous cards for smooth scrolling
+### Library & Collections
+- ✅ Library page with 3 tabs:
+  - ✅ Reading (in-progress stories with progress bars)
+  - ✅ Saved (bookmarked stories)
+  - ✅ Finished (completed stories)
+- ✅ Reading progress percentage display
+- ✅ Story grid layout with cover images
+- ✅ Empty states for each tab
 
-**Story Data & Feed**
-- [ ] Create Story data model (Firestore)
-- [ ] Create Episode data model (Firestore subcollection)
-- [ ] Implement story repository
-- [ ] Build basic recommendation algorithm
-  - [ ] Genre-based filtering
-  - [ ] Random shuffle for diversity
-- [ ] Create Riverpod provider for discover feed
-- [ ] Implement story details bottom sheet
-  - [ ] Full description
-  - [ ] Episode list
-  - [ ] Reactions preview
-  - [ ] Share button
+### Achievements & Gamification
+- ✅ User statistics API
+- ✅ Real-time achievement tracking
+- ✅ 12 achievement types:
+  - ✅ Reading achievements (first story, 10 stories)
+  - ✅ Writing achievements (published, 10 stories)
+  - ✅ Popularity achievements (100 reads, 1000 reads, 50 loves)
+  - ✅ Engagement achievements (7-day streak, 30-day streak)
+  - ✅ Collection achievements (20 bookmarks)
+  - ✅ Community achievements (50 reactions)
+- ✅ Achievement progress tracking
+- ✅ Category filtering
+- ✅ User stats dashboard
+- ✅ Unlocked/locked states with progress bars
 
-**Reactions System**
-- [ ] Create reaction picker (emoji sheet)
-- [ ] Implement reaction tap animation (Lottie)
-- [ ] Save reactions to Firestore
-- [ ] Update reaction counts in real-time
+### Settings & Support
+- ✅ Settings page
+- ✅ Notification preferences UI
+- ✅ Privacy settings UI
+- ✅ Dark mode toggle UI
+- ✅ Help & Support page with FAQ
+- ✅ 10+ FAQ items
+- ✅ Contact options (email support)
+- ✅ Full documentation page (/docs)
+- ✅ Comprehensive user guides
+- ✅ Tips and best practices
 
-### Week 5-6: Story Reader
+### Audio Features
+- ✅ Audio player component
+- ✅ Play/pause controls
+- ✅ Progress seeking
+- ✅ Volume control
+- ✅ Time display (current/total)
+- ✅ Restart button
+- ✅ Auto-resume from saved position
+- ✅ Progress auto-save (every 5 seconds)
+- ✅ Purple/blue gradient theme
 
-**Reader UI**
-- [ ] Build immersive reader screen (fullscreen)
-- [ ] Implement Markdown rendering (flutter_markdown)
-- [ ] Add custom text styles (serif font for stories)
-- [ ] Create episode navigation header
-  - [ ] Back button
-  - [ ] Episode dropdown (1/5, 2/5, etc.)
-  - [ ] More options menu
-- [ ] Build episode navigator footer
-  - [ ] Previous episode button
-  - [ ] Next episode button
-- [ ] Add progress indicator (thin bar at top)
+### Admin Features
+- ✅ Admin panel page
+- ✅ User management (CRUD)
+- ✅ Role assignment
+- ✅ User list with stats
+- ✅ Story import capability
 
-**Reading Features**
-- [ ] Implement scroll position tracking
-- [ ] Auto-save reading progress to Firestore
-- [ ] Create ReadingProgress model
-- [ ] Implement "Continue Reading" functionality
-- [ ] Build reading settings bottom sheet
-  - [ ] Font size (S, M, L, XL)
-  - [ ] Background theme (Dark, Sepia, Light)
-  - [ ] Apply settings globally
+### Database Schema
+- ✅ users table
+- ✅ stories table
+- ✅ episodes table
+- ✅ reactions table
+- ✅ bookmarks table
+- ✅ reading_progress table (with progress_percentage, scroll_position)
+- ✅ Database relationships and constraints
+- ✅ Indexes for performance
 
-**End-of-Episode Experience**
-- [ ] Create end-of-episode screen
-- [ ] Add reaction prompt with emojis
-- [ ] Show reaction statistics from other readers
-- [ ] "Next Episode" CTA button
-- [ ] Mark episode as complete
-
-### Week 7-8: Content Management & Testing
-
-**Content Import**
-- [ ] Create admin tool for importing stories
-- [ ] Import 30 seed stories to Firestore
-- [ ] Upload cover images to Firebase Storage
-- [ ] Verify all episodes display correctly
-
-**Testing & Bug Fixes**
-- [ ] Test authentication flows
-- [ ] Test discovery feed scrolling
-- [ ] Test story reader on multiple devices
-- [ ] Fix UI bugs and performance issues
-- [ ] Optimize image loading (caching)
-- [ ] Implement shimmer loading states
-
-**Checkpoint:** ✅ Users can browse and read stories
+### Content
+- ✅ 15 diverse stories imported
+- ✅ Multiple genres (Romance, Thriller, Literary Fiction, Fantasy, etc.)
+- ✅ Cover images for all stories
+- ✅ Audio for 3 stories (Heimdal, Daffodil, True Colors)
+- ✅ Multiple episodes per story
 
 ---
 
-## 📚 Phase 2: Engagement & Library (Month 3-4)
+## 🔄 IN PROGRESS
 
-### Week 9-10: Library & Bookmarks
+### Testing & Refinement
+- 🔄 User acceptance testing
+- 🔄 Bug fixing based on production usage
+- 🔄 Performance optimization
+- 🔄 Mobile device testing (various screen sizes)
 
-**Library Screen**
-- [ ] Build library screen with tabs
-  - [ ] "Reading" tab (in-progress stories)
-  - [ ] "Saved" tab (bookmarked stories)
-  - [ ] "Finished" tab (completed stories)
-- [ ] Create library story card widget (horizontal layout)
-  - [ ] Cover thumbnail
-  - [ ] Title, progress, CTA
-- [ ] Implement bookmark/save functionality
-- [ ] Create saved stories collection in Firestore
-- [ ] Build "Continue Reading" shelf
-- [ ] Show reading progress per story
+---
 
-**Search & Browse**
-- [ ] Build search screen
+## 📋 TODO - Post-MVP Enhancements
+
+### Authentication Enhancements (Future)
+- [ ] OAuth integration (Google, Apple, GitHub)
+  - Not needed for MVP - add after user testing
+- [ ] Password reset flow (email-based)
+- [ ] Email verification
+- [ ] Two-factor authentication (optional)
+
+### Content & Discovery
+- [ ] Search functionality
+  - [ ] Search by title, author, genre
+  - [ ] Search results page
+  - [ ] Search history
+- [ ] Genre filtering in discover feed
+- [ ] Personalized recommendations
+  - [ ] Based on reading history
+  - [ ] Genre preferences
+  - [ ] User reactions
+- [ ] Trending/popular stories section
+- [ ] New releases section
+
+### Social Features
+- [ ] User following system
+- [ ] Author notifications for new followers
+- [ ] Comments on stories/episodes
+- [ ] User profiles (public view)
+- [ ] User activity feed
+
+### Story Creation Enhancements
+- [ ] Cover image upload
+- [ ] Image insertion in stories
+- [ ] Draft saving
+- [ ] Story preview before publishing
+- [ ] Chapter scheduling
+- [ ] Co-authoring capabilities
+
+### Notifications
+- [ ] Email notifications
+  - [ ] New episode alerts
+  - [ ] Weekly reading summary
+- [ ] In-app notifications
+- [ ] Reading streak reminders
+
+### Analytics & Insights
+- [ ] Story analytics for authors
+  - [ ] Read counts over time
+  - [ ] Completion rates
+  - [ ] Popular episodes
+  - [ ] Reader demographics
+- [ ] User reading insights
+  - [ ] Reading time tracking
+  - [ ] Favorite genres
+  - [ ] Reading habits
+
+### Performance & UX
+- [ ] Image optimization (WebP, lazy loading)
+- [ ] Caching strategies
+- [ ] Offline reading support (PWA)
+- [ ] Reading mode customization
+  - [ ] Font size selector
+  - [ ] Font family options
+  - [ ] Line spacing
+  - [ ] Text color themes
+- [ ] Night mode animation
+- [ ] Page transition improvements
+
+### Monetization (Future Consideration)
+- [ ] Premium subscriptions
+- [ ] Tipping system for authors
+- [ ] Sponsored stories
+- [ ] Ad-free option
+
+### Content Moderation
+- [ ] Report story functionality
+- [ ] Content flagging system
+- [ ] Admin review queue
+- [ ] Automated content filtering
+
+### Mobile App (Future)
+- [ ] React Native version
+- [ ] iOS App Store deployment
+- [ ] Android Play Store deployment
+- [ ] Push notifications (native)
+
+---
+
+## 🐛 Known Issues & Bugs
+
+### High Priority
+- None currently
+
+### Medium Priority
+- [ ] Optimize story image loading on slow connections
+- [ ] Add skeleton loading states
+- [ ] Improve error messages for failed API calls
+
+### Low Priority
+- [ ] Add keyboard shortcuts guide
+- [ ] Improve accessibility (ARIA labels)
+- [ ] Add more transition animations
+
+---
+
+## 📊 Success Metrics to Track
+
+### Engagement
+- Daily active users (DAU)
+- Stories read per user
+- Average reading session time
+- Return user rate (7-day, 30-day)
+
+### Content
+- Stories published per week
+- Active authors
+- Stories completed (by readers)
+- Average reactions per story
+
+### Technical
+- Page load time
+- API response time
+- Error rate
+- Uptime percentage
+
+---
+
+## 🎯 Next Sprint Focus
+
+1. **User Testing** - Get 10-20 beta testers
+2. **Bug Fixes** - Address any issues from testing
+3. **Performance** - Optimize images and API responses
+4. **Search** - Basic search functionality
+5. **Password Reset** - Email-based password recovery
+
+---
+
+## 📝 Notes
+
+- **Tech Decisions:**
+  - Chose Next.js over Flutter for faster iteration and web-first approach
+  - PostgreSQL over Firebase for data ownership and control
+  - No external dependencies like Firebase to keep infrastructure simple
+  - OAuth deferred to post-MVP - email auth is sufficient for testing
+
+- **Future Considerations:**
+  - OAuth can be added once we have proven product-market fit
+  - Mobile apps (React Native) after web version is stable
+  - Consider Vercel/Railway for easier scaling if Oracle Cloud becomes limiting
 - [ ] Implement text search (story title, author)
 - [ ] Add genre filter chips
 - [ ] Create search results list

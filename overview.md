@@ -2,53 +2,61 @@
 
 ## 🎯 Executive Summary
 
-CLIFF is a **mobile-first micro-storytelling platform for teenagers (13-19)** built with **Flutter**. Think TikTok meets Wattpad – vertical swipe discovery, episodic stories with cliffhangers, and user-generated content. 
+CLIFF is a **mobile-first micro-storytelling platform** built with **Next.js and React**. Think TikTok meets Wattpad – vertical swipe discovery, episodic stories with cliffhangers, and user-generated content.
 
-**Focus:** Start lean with teens, nail the product-market fit, then expand to other demographics later.
+**Focus:** Start lean, nail the product-market fit with real users, then expand and optimize.
 
-**Why teens first?** Social media usage is exploding in this group (everyone's on TikTok), but book reading is declining. We meet them where they are with short-form, episodic content that builds reading habits naturally.
+**Why this approach?** We're building a progressive web app that works everywhere - mobile, tablet, and desktop. No app store gatekeepers, instant updates, and a unified codebase.
 
 ---
 
-## 🛠️ Technology Stack (Simplified MVP)
+## 🛠️ Technology Stack (Current Implementation)
 
 ### Frontend
-- **Framework:** Flutter 3.x
-  - iOS & Android from single codebase (Web as Phase 2)
-  - Native performance with smooth 60fps animations
-  - Perfect for vertical swipe gestures (TikTok-style)
-  - Rich ecosystem for UI components
+- **Framework:** Next.js 14.1.0 (React)
+  - Server-side rendering for SEO and performance
+  - Progressive Web App (PWA) capabilities
+  - Mobile-first responsive design
+  - Works across all devices and platforms
+  - Tailwind CSS for styling
+  - Framer Motion for animations
 
-### Backend & Services
-- **Backend as a Service:** Firebase
-  - **Authentication:** Firebase Auth (email, Google, Apple Sign-In)
-  - **Database:** Firestore (stories, users, reactions, reading progress)
-  - **Storage:** Firebase Storage (cover images, story images)
-  - **Analytics:** Firebase Analytics + Mixpanel (user behavior)
-  - **Push Notifications:** Firebase Cloud Messaging (new episode alerts, reading reminders)
-  - **Functions:** Cloud Functions (content moderation triggers, notifications)
+### Backend
+- **Server:** Express.js (Node.js)
+  - RESTful API architecture
+  - JWT-based authentication
+  - Clean MVC structure
   
-- **Content Delivery:** 
-  - **CDN:** Cloudflare (fast global delivery)
-  - **Images:** WebP format with lazy loading
-  - **Text:** Markdown-based story format with custom renderer
-
-- **Payment Processing:**
-  - **Subscriptions:** RevenueCat (manages cross-platform subscriptions)
-  - **Payment Gateway:** Stripe
-
-- **Content Moderation:**
-  - **Automated:** Google Cloud Natural Language API (profanity filter, toxicity detection)
-  - **Manual:** Admin dashboard for review queue
+### Database & Storage
+- **Database:** PostgreSQL
+  - Relational data model
+  - Full control over schema and migrations
+  - Deployed in Docker container
+  - Tables: users, stories, episodes, reactions, bookmarks, reading_progress
+  
+### Infrastructure
+- **Hosting:** Oracle Cloud
+  - Production domain: cliffreader.se
+  - Nginx reverse proxy
+  - SSL/TLS certificates
+  
+- **Containerization:** Docker & Docker Compose
+  - Backend container (Express.js)
+  - Frontend container (Next.js)
+  - Database container (PostgreSQL)
+  
+- **CI/CD:** GitHub Actions
+  - Automated deployment workflow
+  - Code sync via rsync
+  - Container orchestration
 
 ### Developer Tools
 - **Version Control:** Git + GitHub
-- **CI/CD:** GitHub Actions (automated testing & deployment)
-- **Testing:** Flutter test suite + Firebase Test Lab (device testing)
-- **Design:** Figma (design system and prototypes)
-- **Project Management:** Linear or Notion
-- **Monitoring:** Sentry (error tracking & crash reports)
-- **Bug Tracking:** GitHub Issues
+- **Package Manager:** npm
+- **Development:** VS Code
+- **API Testing:** Thunder Client / Postman
+- **Design:** Tailwind CSS utility classes
+- **Monitoring:** Server logs, error tracking
 
 ---
 
@@ -62,11 +70,10 @@ CLIFF is a **mobile-first micro-storytelling platform for teenagers (13-19)** bu
 - TikTok (discovery UX, vertical swipe)
 - Spotify (personalization, clean cards)
 - Medium (reading experience, typography)
-- Discord (community feel for creators)
 
 ### Color Palette
 
-**Dark Mode (Default)** – Teens prefer dark mode
+**Dark Mode (Default)**
 ```
 Background:        #0F0F1E   // Deep navy-black
 Surface:           #1A1A2E   // Elevated cards
@@ -93,111 +100,55 @@ States:
   Info:            #3B82F6   // Blue
 ```
 
-**Light Mode (Optional for MVP)** – Can be added later
-```
-Background:        #FFFFFF
-Surface:           #F9FAFB
-Text Primary:      #111827
-Text Secondary:    #6B7280
-```
-
 ### Typography
 
 **Fonts:**
 ```
-Primary: Inter
+Primary: Inter (via Tailwind)
   - Modern, clean, excellent readability
   - Used for: UI, headings, metadata
 
-Reading: Literata or Georgia
-  - Serif font for story content
+Reading: System serif stack
   - Comfortable for long-form reading
+  - Story content rendering
 
-Accent: Space Grotesk (optional)
-  - For numbers, stats (e.g., "15.2K reads")
+Monospace: For markdown editing
+  - Code-style font for writer interface
 ```
 
-**Type Scale (Mobile-optimized):**
+**Type Scale (Tailwind-based):**
 ```
-Display (Page Headers):  28sp / 700 weight / 1.2 line height
-H1 (Section Headers):    22sp / 700 weight / 1.3 line height
-H2 (Card Titles):        18sp / 600 weight / 1.3 line height
-H3 (Subsections):        16sp / 600 weight / 1.4 line height
+Display (Page Headers):  text-2xl / font-bold
+H1 (Section Headers):    text-xl / font-semibold  
+H2 (Card Titles):        text-lg / font-semibold
+H3 (Subsections):        text-base / font-medium
 
-Body Large (Stories):    18sp / 400 weight / 1.7 line height
-Body (UI Text):          16sp / 400 weight / 1.5 line height
-Body Small:              14sp / 400 weight / 1.5 line height
+Body (Stories):          text-base / leading-relaxed
+Body (UI Text):          text-sm
+Body Small:              text-xs
 
-Caption (Metadata):      12sp / 500 weight / 1.4 line height
-Label (Buttons):         14sp / 600 weight / 1.0 line height
+Caption (Metadata):      text-xs / text-text-dim
 ```
 
-### UI Components Library
+### UI Components
 
 #### Buttons
-```dart
-Primary Button (CTA):
-  - Background: Primary color (#8B7EFF)
-  - Text: White, 14sp, SemiBold
-  - Border radius: 12dp
-  - Height: 48-52dp
-  - Press effect: Scale to 0.96 + haptic feedback
-  - Shadow: Soft glow on primary color
-
-Secondary Button:
-  - Outlined with Primary color
-  - Text: Primary color
-  - Border radius: 12dp
-  - Height: 44-48dp
-
-Text Button:
-  - No background
-  - Primary color text
-  - Underline on hover
-
-Icon Button:
-  - 44x44dp touch target (accessibility)
-  - Icon: 20-24dp
-  - Subtle background on press
-
-Floating Action Button (Create):
-  - 56x56dp circle
-  - Primary color background
-  - White icon (pen or +)
-  - Elevation 6
-  - Bottom-right corner placement
-```
+- **Primary:** Purple background, white text, rounded-xl
+- **Secondary:** Outlined purple, purple text
+- **Icon:** Hover effects with background transitions
 
 #### Cards
-```dart
-Story Preview Card (Discover Feed):
-  - Full-screen vertical card
-  - Background: Cover image with dark gradient overlay (60% opacity)
-  - Border radius: 0 (full screen) or 16dp (if not full)
-  - Content: Title, author, stats, CTA
-  - Press effect: Subtle scale 0.98
-
-Story Card (Library):
-  - Horizontal card (image + text)
-  - Height: 120dp
-  - Cover image: 80x120dp (2:3 ratio)
-  - Border radius: 12dp
-  - Background: Surface color (#1A1A2E)
-  - Shadow: Elevation 2
-
-Episode Card (Reader navigation):
-  - Compact card showing episode info
-  - Border radius: 8dp
-  - Active episode: Primary color highlight
-```
+- **Story Discovery:** Full-height cards with cover image and gradient overlay
+- **Library Cards:** Horizontal layout with cover thumbnail
+- **Profile Cards:** Elevated surface cards with borders
 
 #### Animations
-```dart
-Page transitions:      300ms cubic-bezier(0.4, 0.0, 0.2, 1)
-Card swipe/dismiss:    250ms spring (0.8 damping)
-Button press:          120ms ease-out
-Modal appear:          250ms ease-out scale + fade
-Tab switch:            200ms ease-in-out
+- **Page Transitions:** Framer Motion spring animations
+- **Card Swipe:** Vertical scroll with momentum
+- **Modals:** Scale and fade transitions
+- **Progress Bars:** Smooth width transitions
+
+---
 
 Loading states:        
   - Shimmer: 1500ms linear loop
