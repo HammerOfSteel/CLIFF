@@ -46,8 +46,8 @@ function SettingsPage() {
                   <Eye className="w-5 h-5 text-primary" />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium">Redigera Profil</div>
-                  <div className="text-sm text-text-dim">Ändra bild, namn och bio</div>
+                  <div className="font-medium">{t('settings.editProfile')}</div>
+                  <div className="text-sm text-text-dim">{t('settings.editProfileDesc')}</div>
                 </div>
               </div>
               <span className="text-text-dim">›</span>
@@ -59,8 +59,8 @@ function SettingsPage() {
                   <Lock className="w-5 h-5 text-secondary" />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium">Ändra Lösenord</div>
-                  <div className="text-sm text-text-dim">Uppdatera ditt lösenord</div>
+                  <div className="font-medium">{t('settings.changePassword')}</div>
+                  <div className="text-sm text-text-dim">{t('settings.changePasswordDesc')}</div>
                 </div>
               </div>
               <span className="text-text-dim">›</span>
@@ -76,8 +76,8 @@ function SettingsPage() {
                     <Shield className="w-5 h-5 text-primary" />
                   </div>
                   <div className="text-left">
-                    <div className="font-medium">Admin Panel</div>
-                    <div className="text-sm text-text-dim">Hantera användare</div>
+                    <div className="font-medium">{t('settings.adminPanel')}</div>
+                    <div className="text-sm text-text-dim">{t('settings.adminPanelDesc')}</div>
                   </div>
                 </div>
                 <span className="text-text-dim">›</span>
@@ -97,7 +97,7 @@ function SettingsPage() {
                 </div>
                 <div>
                   <div className="font-medium">{t('settings.pushNotifs')}</div>
-                  <div className="text-sm text-text-dim">{language === 'sv' ? 'Nya episoder och reaktioner' : 'New episodes and reactions'}</div>
+                  <div className="text-sm text-text-dim">{t('settings.pushNotifsDesc')}</div>
                 </div>
               </div>
               <label className="relative inline-block w-12 h-6">
@@ -119,7 +119,7 @@ function SettingsPage() {
                 </div>
                 <div>
                   <div className="font-medium">{t('settings.emailNotifs')}</div>
-                  <div className="text-sm text-text-dim">{language === 'sv' ? 'Veckosammanfattning' : 'Weekly summary'}</div>
+                  <div className="text-sm text-text-dim">{t('settings.emailNotifsDesc')}</div>
                 </div>
               </div>
               <label className="relative inline-block w-12 h-6">
@@ -147,7 +147,7 @@ function SettingsPage() {
                 </div>
                 <div>
                   <div className="font-medium">{t('settings.language')}</div>
-                  <div className="text-sm text-text-dim">{language === 'sv' ? 'Välj språk för gränssnittet' : 'Choose interface language'}</div>
+                  <div className="text-sm text-text-dim">{t('settings.languageDesc')}</div>
                 </div>
               </div>
               <div className="flex gap-2 mt-3">
@@ -186,8 +186,8 @@ function SettingsPage() {
                   <Globe className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <div className="font-medium">Offentlig Profil</div>
-                  <div className="text-sm text-text-dim">Andra kan se din profil</div>
+                  <div className="font-medium">{t('settings.publicProfile')}</div>
+                  <div className="text-sm text-text-dim">{t('settings.publicProfileDesc')}</div>
                 </div>
               </div>
               <label className="relative inline-block w-12 h-6">
@@ -208,8 +208,8 @@ function SettingsPage() {
                   <Lock className="w-5 h-5 text-accent" />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium">Datasekretess</div>
-                  <div className="text-sm text-text-dim">Hantera dina data</div>
+                  <div className="font-medium">{t('settings.dataPrivacy')}</div>
+                  <div className="text-sm text-text-dim">{t('settings.dataPrivacyDesc')}</div>
                 </div>
               </div>
               <span className="text-text-dim">›</span>
@@ -219,7 +219,7 @@ function SettingsPage() {
 
         {/* Support Section */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Support</h2>
+          <h2 className="text-lg font-semibold mb-4">{t('settings.support')}</h2>
           <div className="bg-surface rounded-2xl border border-border divide-y divide-border">
             <button className="w-full flex items-center justify-between p-4 hover:bg-surface-variant transition">
               <div className="flex items-center gap-3">
@@ -227,8 +227,8 @@ function SettingsPage() {
                   <HelpCircle className="w-5 h-5 text-accent" />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium">Hjälp & Support</div>
-                  <div className="text-sm text-text-dim">FAQ och kontakt</div>
+                  <div className="font-medium">{t('settings.helpSupport')}</div>
+                  <div className="text-sm text-text-dim">{t('settings.helpSupportDesc')}</div>
                 </div>
               </div>
               <span className="text-text-dim">›</span>
@@ -240,7 +240,7 @@ function SettingsPage() {
                   <Mail className="w-5 h-5 text-secondary" />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium">Kontakta Oss</div>
+                  <div className="font-medium">{t('settings.contactUs')}</div>
                   <div className="text-sm text-text-dim">support@cliff.se</div>
                 </div>
               </div>
@@ -251,7 +251,7 @@ function SettingsPage() {
 
         {/* Danger Zone */}
         <div>
-          <h2 className="text-lg font-semibold mb-4 text-red-400">Farlig Zon</h2>
+          <h2 className="text-lg font-semibold mb-4 text-red-400">{t('settings.dangerZone')}</h2>
           <div className="bg-surface rounded-2xl border border-red-500/20 divide-y divide-border">
             <button className="w-full flex items-center justify-between p-4 hover:bg-red-500/5 transition">
               <div className="flex items-center gap-3">
@@ -259,8 +259,8 @@ function SettingsPage() {
                   <Trash2 className="w-5 h-5 text-red-400" />
                 </div>
                 <div className="text-left">
-                  <div className="font-medium text-red-400">Radera Konto</div>
-                  <div className="text-sm text-text-dim">Permanent borttagning</div>
+                  <div className="font-medium text-red-400">{t('settings.deleteAccount')}</div>
+                  <div className="text-sm text-text-dim">{t('settings.deleteAccountDesc')}</div>
                 </div>
               </div>
               <span className="text-red-400">›</span>

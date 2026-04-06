@@ -83,19 +83,19 @@ function CreatePage() {
 
   const handlePublish = async () => {
     if (!title.trim()) {
-      setError('Titel krävs');
+      setError(t('create.errorTitle'));
       return;
     }
     if (!hook.trim()) {
-      setError('Kort beskrivning krävs');
+      setError(t('create.errorDescription'));
       return;
     }
     if (!genre) {
-      setError('Genre krävs');
+      setError(t('create.errorGenre'));
       return;
     }
     if (!content.trim()) {
-      setError('Innehåll krävs');
+      setError(t('create.errorContent'));
       return;
     }
 
@@ -159,46 +159,46 @@ function CreatePage() {
       {/* Content */}
       <main className="max-w-2xl mx-auto p-4 space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-2">Titel *</label>
+          <label className="block text-sm font-medium mb-2">{t('create.titleLabel')}</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ge din berättelse en titel..."
+            placeholder={t('create.titlePlaceholder')}
             className="w-full bg-surface border border-border rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Kort beskrivning *</label>
+          <label className="block text-sm font-medium mb-2">{t('create.descriptionLabel')}</label>
           <textarea
             value={hook}
             onChange={(e) => setHook(e.target.value)}
-            placeholder="Beskriv din berättelse i en mening..."
+            placeholder={t('create.descriptionPlaceholder')}
             className="w-full bg-surface border border-border rounded-xl px-4 py-3 h-20 resize-none focus:border-primary focus:outline-none transition"
             maxLength={150}
           />
-          <div className="text-xs text-text-dim mt-1">{hook.length}/150 tecken</div>
+          <div className="text-xs text-text-dim mt-1">{hook.length}/150 {t('create.characters')}</div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Omslagsbild</label>
+          <label className="block text-sm font-medium mb-2">{t('create.coverImage')}</label>
           <button className="w-full h-48 bg-surface border-2 border-dashed border-border rounded-xl flex flex-col items-center justify-center gap-2 hover:border-primary transition">
             <ImageIcon className="w-8 h-8 text-text-dim" />
-            <span className="text-sm text-text-secondary">Ladda upp bild</span>
-            <span className="text-xs text-text-dim">Rekommenderad storlek: 800x1200px</span>
+            <span className="text-sm text-text-secondary">{t('create.uploadImage')}</span>
+            <span className="text-xs text-text-dim">{t('create.imageSize')}</span>
           </button>
         </div>
 
         <div className="flex gap-4">
           <div className="flex-1">
-            <label className="block text-sm font-medium mb-2">Genre *</label>
+            <label className="block text-sm font-medium mb-2">{t('create.genreLabel')}</label>
             <select 
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
               className="w-full bg-surface border border-border rounded-xl px-4 py-3 focus:border-primary focus:outline-none transition"
             >
-              <option value="">Välj genre...</option>
+              <option value="">{t('create.selectGenre')}</option>
               <option value="Romance">Romance</option>
               <option value="Thriller">Thriller</option>
               <option value="Skräck">Skräck</option>

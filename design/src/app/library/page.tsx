@@ -97,8 +97,8 @@ function LibraryPage() {
               <h3 className="font-medium text-sm line-clamp-2">{story.title}</h3>
               <div className="text-xs text-text-dim">
                 {activeTab === 'reading' && story.progress_percentage ? 
-                  `${Math.round(story.progress_percentage)}% avklarat` :
-                  `${formatNumber(story.reads || 0)} läsningar`
+                  `${Math.round(story.progress_percentage)}${t('library.progress')}` :
+                  `${formatNumber(story.reads || 0)} ${t('library.reads')}`
                 }
               </div>
             </div>
