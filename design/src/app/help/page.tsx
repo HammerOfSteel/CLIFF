@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import BottomNav from '@/components/BottomNav';
 import withAuth from '@/components/withAuth';
-import { ArrowLeft, ChevronDown, ChevronUp, Mail, MessageCircle, Book, Shield } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, Mail, Book, Shield } from 'lucide-react';
 
 function HelpPage() {
   const router = useRouter();
@@ -61,16 +61,10 @@ function HelpPage() {
       action: () => window.location.href = 'mailto:support@cliffreader.se'
     },
     {
-      icon: <MessageCircle className="w-5 h-5" />,
-      title: 'Community Forum',
-      description: 'Diskutera med andra användare',
-      action: () => {}
-    },
-    {
       icon: <Book className="w-5 h-5" />,
       title: 'Dokumentation',
       description: 'Läs vår kompletta guide',
-      action: () => {}
+      action: () => router.push('/docs')
     },
   ];
 

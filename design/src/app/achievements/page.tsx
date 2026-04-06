@@ -22,6 +22,7 @@ function AchievementsPage() {
   const router = useRouter();
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('Alla');
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -164,7 +165,6 @@ function AchievementsPage() {
   const achievements = getAchievements();
   const unlockedCount = achievements.filter(a => a.unlocked).length;
   const categories = ['Alla', ...new Set(achievements.map(a => a.category))];
-  const [selectedCategory, setSelectedCategory] = useState('Alla');
 
   const filteredAchievements = selectedCategory === 'Alla' 
     ? achievements 

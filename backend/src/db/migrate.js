@@ -73,10 +73,29 @@ const createTables = async () => {
         user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
         story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE,
         episode_id INTEGER REFERENCES episodes(id) ON DELETE CASCADE,
+        progress_percentage INTEGER DEFAULT 0,
+        scroll_position INTEGER DEFAULT 0,
         completed BOOLEAN DEFAULT FALSE,
         last_read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        audio_position REAL DEFAULT 0,
         UNIQUE(user_id, story_id, episode_id)
       );
+    `);
+
+    // Add missing columns to existing reading_progress table
+    await client.query(`
+      DO $$ 
+      BEGIN 
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                       WHERE table_name='reading_progress' AND column_name='progress_percentage') THEN
+          ALTER TABLE reading_progress ADD COLUMN progress_percentage INTEGER DEFAULT 0;
+        END IF;
+        
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                       WHERE table_name='reading_progress' AND column_name='scroll_position') THEN
+          ALTER TABLE reading_progress ADD COLUMN scroll_position INTEGER DEFAULT 0;
+        END IF;
+      END $$;
     `);
 
     // Bookmarks table
