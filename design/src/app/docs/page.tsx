@@ -1,16 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useLanguage } from '@/contexts/LanguageContext';
 import BottomNav from '@/components/BottomNav';
 import withAuth from '@/components/withAuth';
 import { ArrowLeft, Book, Search, Edit, Bookmark, Trophy, Heart } from 'lucide-react';
 
 function DocsPage() {
   const router = useRouter();
-  const { language } = useLanguage();
 
-  const sections = language === 'sv' ? [
+  const sections = [
     {
       title: 'Kom Igång',
       icon: <Book className="w-6 h-6" />,
@@ -135,131 +133,6 @@ function DocsPage() {
         }
       ]
     }
-  ] : [
-    {
-      title: 'Getting Started',
-      icon: <Book className="w-6 h-6" />,
-      topics: [
-        {
-          title: 'Create an account',
-          content: 'Start by creating a free account by clicking "Sign Up" on the homepage. You only need a username and password to get started.'
-        },
-        {
-          title: 'Navigate the app',
-          content: 'Use the bottom navigation to switch between Discover (home), Library (saved stories), Create (write your own), and Profile (your settings).'
-        },
-        {
-          title: 'Your first story',
-          content: 'Go to the "Discover" tab and browse stories by scrolling up/down. Click on a story to read more about it, then "Start Reading" to begin.'
-        }
-      ]
-    },
-    {
-      title: 'Reading Stories',
-      icon: <Search className="w-6 h-6" />,
-      topics: [
-        {
-          title: 'Discover new stories',
-          content: 'On the homepage you see stories in a vertical feed (like TikTok). Scroll up/down to browse. Information about each story is shown at the bottom of the screen.'
-        },
-        {
-          title: 'Save for later',
-          content: 'Tap the bookmark icon to save a story. Find all saved stories under "Library > Saved".'
-        },
-        {
-          title: 'Reading position saves automatically',
-          content: 'Your reading position is automatically saved when you read. You can always continue where you left off by opening the story again or going to "Library > Reading".'
-        },
-        {
-          title: 'React to stories',
-          content: 'Use reactions (❤️ 😱 🔥 😭 💀) to show authors what you think. Reactions are shown at the end of each chapter.'
-        },
-        {
-          title: 'Audio and PDF stories',
-          content: 'Some stories have audio recordings. The audio player appears automatically when the story has sound. PDF stories can be read with our built-in PDF reader.'
-        }
-      ]
-    },
-    {
-      title: 'Writing Stories',
-      icon: <Edit className="w-6 h-6" />,
-      topics: [
-        {
-          title: 'Create a new story',
-          content: 'Go to the "Create" tab and fill in:\n• Title\n• Short description (max 150 characters)\n• Genre\n• First chapter (at least 100 words)\n\nThen tap "Publish" when you\'re done.'
-        },
-        {
-          title: 'Format your text',
-          content: 'Use the toolbar for easy formatting:\n• **bold** for bold text\n• *italic* for italic text\n• - for bullet lists\n\nYou can also select text and tap the buttons.'
-        },
-        {
-          title: 'Edit published stories',
-          content: 'Go to your profile and find the story you want to edit. Tap the edit icon (pencil). You can change the title, description, and text content.'
-        },
-        {
-          title: 'Tips for great stories',
-          content: '• Keep chapters short (3-5 minutes of reading)\n• Start with a strong opening\n• End with a cliffhanger\n• Use dialogue to make the story lively\n• Proofread before publishing'
-        },
-        {
-          title: 'Manage multiple episodes',
-          content: 'In edit mode, you can choose which episode to edit. Each episode can have its own title and content. Use "Next Chapter" and "Previous Chapter" to navigate.'
-        }
-      ]
-    },
-    {
-      title: 'Library',
-      icon: <Bookmark className="w-6 h-6" />,
-      topics: [
-        {
-          title: 'Currently reading',
-          content: 'Here you see all stories you have started reading but not finished. A progress indicator shows how far you have come.'
-        },
-        {
-          title: 'Saved stories',
-          content: 'All stories you have bookmarked are collected here. Perfect for creating your own reading list.'
-        },
-        {
-          title: 'Completed',
-          content: 'When you read the last chapter in a story, it automatically moves to "Completed". See history of what you have finished reading.'
-        }
-      ]
-    },
-    {
-      title: 'Achievements',
-      icon: <Trophy className="w-6 h-6" />,
-      topics: [
-        {
-          title: 'How to unlock achievements',
-          content: 'Achievements are unlocked automatically based on your activity:\n• Read stories (Bookworm, First Story)\n• Publish your own stories (Author, 10 Stories)\n• Get readings and reactions (100 Readings, Loved)\n• Read regularly (7-day Streak, 30-day Streak)'
-        },
-        {
-          title: 'See your progress',
-          content: 'Unlocked achievements show a progress indicator so you know how close you are to unlocking them. Go to "Profile > Achievements" to see all.'
-        },
-        {
-          title: 'Categories',
-          content: 'Achievements are divided into categories:\n• Reader - for those who love to read\n• Author - for those who write\n• Popularity - for stories that get many readings\n• Engagement - for regular activity\n• Community - for active users'
-        }
-      ]
-    },
-    {
-      title: 'Settings & Privacy',
-      icon: <Heart className="w-6 h-6" />,
-      topics: [
-        {
-          title: 'Notifications',
-          content: 'Under "Settings" you can enable/disable:\n• Push notifications for new episodes\n• Email notifications for weekly summaries\n• Reminders about reading streaks'
-        },
-        {
-          title: 'Privacy',
-          content: 'Your information is safe with us. We never share your data with third parties. You can delete your account at any time under "Settings".'
-        },
-        {
-          title: 'Edit profile',
-          content: 'Update your profile picture, username and bio under "Profile > Edit Profile". Changes are visible to other users immediately.'
-        }
-      ]
-    }
   ];
 
   return (
@@ -278,14 +151,9 @@ function DocsPage() {
       {/* Hero */}
       <div className="bg-gradient-to-b from-primary/10 to-transparent p-8 text-center border-b border-border">
         <div className="text-6xl mb-4">📖</div>
-        <h2 className="text-2xl font-bold mb-2">
-          {language === 'sv' ? 'CLIFF Användarguide' : 'CLIFF User Guide'}
-        </h2>
+        <h2 className="text-2xl font-bold mb-2">CLIFF Användarguide</h2>
         <p className="text-text-secondary">
-          {language === 'sv' 
-            ? 'Allt du behöver veta för att komma igång med CLIFF' 
-            : 'Everything you need to know to get started with CLIFF'
-          }
+          Allt du behöver veta för att komma igång med CLIFF
         </p>
       </div>
 
@@ -311,13 +179,13 @@ function DocsPage() {
               ))}
             </div>
           </div>
-            {language === 'sv' ? 'Behöver du mer hjälp?' : 'Need more help?'}
-          </h4>
+        ))}
+
+        {/* Contact */}
+        <div className="bg-primary/10 border border-primary/20 rounded-xl p-6 text-center">
+          <h4 className="font-semibold mb-2">Behöver du mer hjälp?</h4>
           <p className="text-sm text-text-secondary mb-4">
-            {language === 'sv' 
-              ? 'Om du inte hittar svar på din fråga, kontakta oss på' 
-              : 'If you can\'t find an answer to your question, contact us at'
-            }
+            Om du inte hittar svar på din fråga, kontakta oss på
           </p>
           <a 
             href="mailto:support@cliffreader.se"
@@ -325,11 +193,6 @@ function DocsPage() {
           >
             support@cliffreader.se
           </a>
-        </div>
-
-        {/* Version */}
-        <div className="text-center text-sm text-text-dim pt-4">
-          <p>{language === 'sv' ? 'Senast uppdaterad: April 2026' : 'Last updated: April 2026'}
         </div>
 
         {/* Version */}

@@ -118,8 +118,8 @@ function HelpPage() {
     },
     {
       icon: <Book className="w-5 h-5" />,
-      title: language === 'sv' ? 'Dokumentation' : 'Documentation',
-      description: language === 'sv' ? 'Läs vår kompletta guide' : 'Read our complete guide',
+      title: 'Documentation',
+      description: 'Read our complete guide',
       action: () => router.push('/docs')
     },
   ];
@@ -158,19 +158,19 @@ function HelpPage() {
           <h3 className="text-lg font-semibold mb-4">
             {language === 'sv' ? 'Kontakta Oss' : 'Contact Us'}
           </h3>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {contactOptions.map((option, index) => (
               <button
                 key={index}
                 onClick={option.action}
-                className="w-full flex items-center gap-4 p-4 bg-surface rounded-xl hover:bg-surface-variant transition border border-border"
+                className="flex items-center gap-4 p-4 bg-surface rounded-xl border border-border hover:border-primary transition text-left"
               >
                 <div className="p-3 bg-primary/10 rounded-xl text-primary">
                   {option.icon}
                 </div>
-                <div className="flex-1 text-left">
-                  <p className="font-medium">{option.title}</p>
-                  <p className="text-sm text-text-dim">{option.description}</p>
+                <div className="flex-1">
+                  <h4 className="font-semibold">{option.title}</h4>
+                  <p className="text-sm text-text-secondary">{option.description}</p>
                 </div>
               </button>
             ))}
@@ -179,23 +179,25 @@ function HelpPage() {
 
         {/* FAQ Section */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Vanliga Frågor</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            {language === 'sv' ? 'Vanliga Frågor' : 'Frequently Asked Questions'}
+          </h3>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
               <div key={index} className="bg-surface rounded-xl border border-border overflow-hidden">
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full flex items-center justify-between p-4 hover:bg-surface-variant transition"
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-surface-variant transition"
                 >
-                  <span className="font-medium text-left">{faq.question}</span>
+                  <span className="font-medium pr-4">{faq.question}</span>
                   {expandedFaq === index ? (
-                    <ChevronUp className="w-5 h-5 text-text-dim flex-shrink-0 ml-2" />
+                    <ChevronUp className="w-5 h-5 flex-shrink-0 text-primary" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-text-dim flex-shrink-0 ml-2" />
+                    <ChevronDown className="w-5 h-5 flex-shrink-0 text-text-secondary" />
                   )}
                 </button>
                 {expandedFaq === index && (
-                  <div className="px-4 pb-4 text-text-secondary text-sm">
+                  <div className="px-4 pb-4 text-sm text-text-secondary leading-relaxed">
                     {faq.answer}
                   </div>
                 )}
@@ -207,7 +209,9 @@ function HelpPage() {
         {/* Quick Tips */}
         <div className="bg-primary/10 border border-primary/20 rounded-xl p-6">
           <div className="flex items-start gap-3">
-            <Shield className="w-6 h-6 text-primary flex-shrin
+            <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+            <div>
+              <h4 className="font-semibold mb-2 text-primary">
                 {language === 'sv' ? 'Tips för bästa upplevelse' : 'Tips for best experience'}
               </h4>
               <ul className="text-sm text-text-secondary space-y-1">
@@ -240,22 +244,6 @@ function HelpPage() {
               : '© 2026 CLIFF. All rights reserved.'
             }
           </p>
-        </div
-              <h4 className="font-semibold mb-2 text-primary">Tips för bästa upplevelse</h4>
-              <ul className="text-sm text-text-secondary space-y-1">
-                <li>• Använd bokmärken för att spara berättelser du vill läsa senare</li>
-                <li>• Aktivera notiser för att inte missa nya episoder</li>
-                <li>• Reagera på berättelser för att hjälpa författare</li>
-                <li>• Håll kapitlen korta (3-5 min) när du skriver</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Version Info */}
-        <div className="text-center text-sm text-text-dim pt-8">
-          <p>CLIFF Reader v1.0.0</p>
-          <p className="mt-1">© 2026 CLIFF. Alla rättigheter förbehållna.</p>
         </div>
       </main>
 
