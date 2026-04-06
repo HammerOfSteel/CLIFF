@@ -3,17 +3,20 @@
 import Link from 'next/link';
 import { Home, Library, PenTool, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BottomNavProps {
   activeTab: 'discover' | 'library' | 'create' | 'profile';
 }
 
 export default function BottomNav({ activeTab }: BottomNavProps) {
+  const { t } = useLanguage();
+  
   const tabs = [
-    { id: 'discover', icon: Home, label: 'Upptäck', href: '/' },
-    { id: 'library', icon: Library, label: 'Bibliotek', href: '/library' },
-    { id: 'create', icon: PenTool, label: 'Skapa', href: '/create' },
-    { id: 'profile', icon: User, label: 'Profil', href: '/profile' },
+    { id: 'discover', icon: Home, label: t('nav.discover'), href: '/' },
+    { id: 'library', icon: Library, label: t('nav.library'), href: '/library' },
+    { id: 'create', icon: PenTool, label: t('nav.create'), href: '/create' },
+    { id: 'profile', icon: User, label: t('nav.profile'), href: '/profile' },
   ];
 
   return (
