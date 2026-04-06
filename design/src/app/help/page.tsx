@@ -117,11 +117,9 @@ function HelpPage() {
       action: () => window.location.href = 'mailto:support@cliffreader.se'
     },
     {
-            {language === 'sv' ? 'Vanliga Frågor' : 'Frequently Asked Questions'}
-          
       icon: <Book className="w-5 h-5" />,
-      title: 'Documentation',
-      description: 'Read our complete guide',
+      title: language === 'sv' ? 'Dokumentation' : 'Documentation',
+      description: language === 'sv' ? 'Läs vår kompletta guide' : 'Read our complete guide',
       action: () => router.push('/docs')
     },
   ];

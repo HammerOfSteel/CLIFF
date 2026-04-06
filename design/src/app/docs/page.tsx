@@ -145,7 +145,7 @@ function DocsPage() {
           content: 'Start by creating a free account by clicking "Sign Up" on the homepage. You only need a username and password to get started.'
         },
         {
-          title: 'Navigate the app',{language === 'sv' ? 'Dokumentation' : 'Documentation'}
+          title: 'Navigate the app',
           content: 'Use the bottom navigation to switch between Discover (home), Library (saved stories), Create (write your own), and Profile (your settings).'
         },
         {
