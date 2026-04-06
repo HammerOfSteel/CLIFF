@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { storiesApi } from '@/lib/api';
 import withAuth from '@/components/withAuth';
@@ -9,6 +10,7 @@ import { Settings, Share2, Flame, BookOpen, Award, LogOut, Shield, Edit } from '
 import Link from 'next/link';
 
 function ProfilePage() {
+  const { t } = useLanguage();
   const { user, logout, isAdmin } = useAuth();
   const [userStories, setUserStories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +46,7 @@ function ProfilePage() {
       {/* Header */}
       <header className="bg-surface border-b border-border">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-xl font-bold">Profil</h1>
+          <h1 className="text-xl font-bold">{t('profile.title')}</h1>
           <div className="flex items-center gap-2">
             {isAdmin && (
               <Link
@@ -88,11 +90,11 @@ function ProfilePage() {
           <div className="flex justify-center gap-8 mb-4">
             <div className="text-center">
               <div className="text-2xl font-bold">847</div>
-              <div className="text-xs text-text-dim">Följare</div>
+              <div className="text-xs text-text-dim">{t('profile.followers')}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold">12</div>
-              <div className="text-xs text-text-dim">Följer</div>
+              <div className="text-xs text-text-dim">{t('profile.following')}</div>
             </div>
           </div>
 
@@ -175,7 +177,7 @@ function ProfilePage() {
         {/* My Stories */}
         <div className="border-t border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">✍️ Mina Berättelser</h3>
+            <h3 className="text-lg font-semibold">✍️ {t('profile.myStories')}</h3>
             {userStories.length > 0 && (
               <Link href="/my-stories">
                 <button className="text-sm text-primary hover:underline">

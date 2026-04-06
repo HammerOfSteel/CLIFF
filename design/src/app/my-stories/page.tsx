@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { storiesApi } from '@/lib/api';
 import BottomNav from '@/components/BottomNav';
 import withAuth from '@/components/withAuth';
@@ -9,6 +10,7 @@ import { ArrowLeft, Edit, Eye, Heart, Plus } from 'lucide-react';
 import Link from 'next/link';
 
 function MyStoriesPage() {
+  const { t } = useLanguage();
   const router = useRouter();
   const [stories, setStories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ function MyStoriesPage() {
           <button onClick={() => router.back()} className="p-2 hover:bg-surface-variant rounded-full transition">
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-xl font-bold">Mina Berättelser</h1>
+          <h1 className="text-xl font-bold">{t('profile.myStories')}</h1>
           <Link href="/create">
             <button className="p-2 hover:bg-surface-variant rounded-full transition text-primary">
               <Plus className="w-5 h-5" />

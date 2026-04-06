@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
@@ -20,6 +21,7 @@ const backgrounds = [
 ];
 
 export default function LoginPage() {
+  const { t } = useLanguage();
   const router = useRouter();
   const { login: authLogin, isAuthenticated, loading: authLoading } = useAuth();
   const [currentBg, setCurrentBg] = useState(0);
@@ -186,12 +188,12 @@ export default function LoginPage() {
                 {loading ? (
                   <span className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-text/20 border-t-text rounded-full animate-spin" />
-                    Loggar in...
+                    {t('auth.loggingIn')}
                   </span>
                 ) : (
                   <>
                     <LogIn className="w-5 h-5" />
-                    Logga in
+                    {t('auth.login')}
                   </>
                 )}
               </button>

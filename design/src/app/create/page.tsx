@@ -2,12 +2,14 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { storiesApi } from '@/lib/api';
 import BottomNav from '@/components/BottomNav';
 import withAuth from '@/components/withAuth';
 import { PenTool, Image as ImageIcon, Bold, Italic, List, ArrowLeft } from 'lucide-react';
 
 function CreatePage() {
+  const { t } = useLanguage();
   const router = useRouter();
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [title, setTitle] = useState('');
@@ -121,7 +123,7 @@ function CreatePage() {
       router.push(`/story/${story.id}`);
     } catch (err: any) {
       console.error('Error publishing story:', err);
-      setError(err.message || 'Kunde inte publicera berättelsen');
+      setError(err.message || t('create.errorPublish'));
     } finally {
       setLoading(false);
     }
@@ -134,15 +136,15 @@ function CreatePage() {
         <div className="flex items-center justify-between p-4">
           <button onClick={() => router.back()} className="text-text-dim flex items-center gap-2">
             <ArrowLeft className="w-5 h-5" />
-            Avbryt
+            {t('common.cancel')}
           </button>
-          <h1 className="text-lg font-semibold">Ny Berättelse</h1>
+          <h1 className="text-lg font-semibold">{t('create.title')}</h1>
           <button 
             onClick={handlePublish}
             disabled={loading}
             className="text-primary font-medium disabled:opacity-50"
           >
-            {loading ? 'Publicerar...' : 'Publicera'}
+            {loading ? t('create.publishing') : t('create.publish')}
           </button>
         </div>
       </header>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useRouter } from 'next/navigation';
 import { statsApi } from '@/lib/api';
 import BottomNav from '@/components/BottomNav';
@@ -19,6 +20,7 @@ interface UserStats {
 }
 
 function AchievementsPage() {
+  const { t } = useLanguage();
   const router = useRouter();
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -178,7 +180,7 @@ function AchievementsPage() {
           <button onClick={() => router.back()} className="p-2 hover:bg-surface-variant rounded-full transition">
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-xl font-bold">Prestationer</h1>
+          <h1 className="text-xl font-bold">{t('achievements.title')}</h1>
           <div className="w-9"></div>
         </div>
       </header>

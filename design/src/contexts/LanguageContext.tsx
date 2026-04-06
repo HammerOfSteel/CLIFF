@@ -128,6 +128,7 @@ const translations = {
     'auth.username': 'Username',
     'auth.password': 'Password',
     'auth.email': 'Email',
+    'auth.loggingIn': 'Logging in...',
     
     // Profile
     'profile.title': 'Profile',
@@ -137,6 +138,9 @@ const translations = {
     'profile.viewAll': 'View all achievements →',
     'profile.stats': 'Reading Stats',
     'profile.help': 'Help & Support',
+    'profile.followers': 'Followers',
+    'profile.following': 'Following',
+    'profile.editProfile': 'Edit Profile',
     
     // Library
     'library.title': 'My Library',
@@ -168,6 +172,8 @@ const translations = {
     'create.selectGenre': 'Select genre...',
     'create.content': 'Content',
     'create.wordCount': 'words',
+    'create.episodeTitle': 'Chapter 1',
+    'create.errorPublish': 'Could not publish story',
     'create.formatting': 'Formatting',
     
     // Settings

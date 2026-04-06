@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import BottomNav from '@/components/BottomNav';
 import withAuth from '@/components/withAuth';
 import { interactionsApi } from '@/lib/api';
@@ -9,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 function LibraryPage() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'reading' | 'saved' | 'finished'>('reading');
   const [readingStories, setReadingStories] = useState<any[]>([]);
   const [savedStories, setSavedStories] = useState<any[]>([]);
@@ -40,9 +42,9 @@ function LibraryPage() {
   }, [activeTab]);
 
   const tabs = [
-    { id: 'reading', label: 'Läser' },
-    { id: 'saved', label: 'Sparade' },
-    { id: 'finished', label: 'Avklarade' },
+    { id: 'reading', label: t('library.reading') },
+    { id: 'saved', label: t('library.saved') },
+    { id: 'finished', label: t('library.finished') },
   ] as const;
 
   const renderStoryGrid = (stories: any[], emptyMessage: string, emptyIcon: string) => {
@@ -60,12 +62,12 @@ function LibraryPage() {
           <div className="text-6xl mb-4">{emptyIcon}</div>
           <h3 className="text-lg font-semibold mb-2">{emptyMessage}</h3>
           <p className="text-text-secondary mb-6">
-            {activeTab === 'reading' ? 'Börja läsa berättelser så visas de här' : 
-             activeTab === 'saved' ? 'Spara berättelser så visas de här' :
-             'Läs klart berättelser så visas de här'}
+            {activeTab === 'reading' ? t('library.noReading') : 
+             activeTab === 'saved' ? t('library.noSaved') :
+             t('library.noFinished')}
           </p>
           <Link href="/">
-            <button className="btn-primary">Upptäck Berättelser</button>
+            <button className="btn-primary">{t('library.discover')}</button>
           </Link>
         </div>
       );
@@ -111,7 +113,7 @@ function LibraryPage() {
       {/* Header */}
       <header className="sticky top-0 z-10 bg-surface border-b border-border">
         <div className="p-4">
-          <h1 className="text-2xl font-bold">Mitt Bibliotek</h1>
+          <h1 className="text-2xl font-bold">{t('library.title')}</h1>
         </div>
 
         {/* Tabs */}
@@ -136,22 +138,22 @@ function LibraryPage() {
       <main className="p-4">
         {activeTab === 'reading' && (
           <div>
-            <h2 className="text-lg font-semibold mb-4">Läser nu ({readingStories.length})</h2>
-            {renderStoryGrid(readingStories, 'Ingen läshistorik än', '📚')}
+            <h2 className="text-lg font-semibold mb-4">{t('library.reading')} ({readingStories.length})</h2>
+            {renderStoryGrid(readingStories, t('library.noReading'), '📚')}
           </div>
         )}
 
         {activeTab === 'saved' && (
           <div>
-            <h2 className="text-lg font-semibold mb-4">Sparade berättelser ({savedStories.length})</h2>
-            {renderStoryGrid(savedStories, 'Inga sparade berättelser än', '🔖')}
+            <h2 className="text-lg font-semibold mb-4">{t('library.saved')} ({savedStories.length})</h2>
+            {renderStoryGrid(savedStories, t('library.noSaved'), '🔖')}
           </div>
         )}
 
         {activeTab === 'finished' && (
           <div>
-            <h2 className="text-lg font-semibold mb-4">Avklarade ({finishedStories.length})</h2>
-            {renderStoryGrid(finishedStories, 'Inga avklarade berättelser än', '🏆')}
+            <h2 className="text-lg font-semibold mb-4">{t('library.finished')} ({finishedStories.length})</h2>
+            {renderStoryGrid(finishedStories, t('library.noFinished'), '🏆')}
           </div>
         )}
       </main>
