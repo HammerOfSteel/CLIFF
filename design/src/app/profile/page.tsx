@@ -33,12 +33,12 @@ function ProfilePage() {
   if (!user) return null;
 
   const achievements = [
-    { emoji: '📚', label: 'Första berättelsen', unlocked: true },
-    { emoji: '🔥', label: '7-dagars streak', unlocked: true },
-    { emoji: '✍️', label: 'Publicerad', unlocked: true },
-    { emoji: '💯', label: '100 läsningar', unlocked: true },
-    { emoji: '🏆', label: '10 berättelser', unlocked: false },
-    { emoji: '⭐', label: '30-dagars streak', unlocked: false },
+    { emoji: '📚', label: t('achievements.firstStory'), unlocked: true },
+    { emoji: '🔥', label: t('achievements.sevenDayStreak'), unlocked: true },
+    { emoji: '✍️', label: t('achievements.published'), unlocked: true },
+    { emoji: '💯', label: t('achievements.hundredReads'), unlocked: true },
+    { emoji: '🏆', label: t('achievements.tenStories'), unlocked: false },
+    { emoji: '⭐', label: t('achievements.thirtyDayStreak'), unlocked: false },
   ];
 
   return (
@@ -100,28 +100,28 @@ function ProfilePage() {
 
           <div className="flex items-center justify-center gap-2 text-sm mb-4">
             <Flame className="w-5 h-5 text-secondary" />
-            <span className="font-semibold">12-dagars streak!</span>
+            <span className="font-semibold">12{t('profile.streak')}</span>
           </div>
 
           <div className="flex gap-3">
             <Link href="/profile/edit" className="flex-1 btn-secondary text-center">
-              Redigera Profil
+              {t('profile.editProfile')}
             </Link>
             <button onClick={logout} className="btn-secondary flex items-center gap-2">
               <LogOut className="w-4 h-4" />
-              Logga ut
+              {t('profile.logout')}
             </button>
           </div>
         </div>
 
         {/* Stats */}
         <div className="border-t border-border p-6">
-          <h3 className="text-lg font-semibold mb-4">📊 Lässtatistik</h3>
+          <h3 className="text-lg font-semibold mb-4">📊 {t('profile.stats')}</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <BookOpen className="w-5 h-5 text-primary" />
-                <span className="text-sm">Berättelser lästa</span>
+                <span className="text-sm">{t('profile.storiesRead')}</span>
               </div>
               <span className="font-semibold">15</span>
             </div>
@@ -129,7 +129,7 @@ function ProfilePage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Flame className="w-5 h-5 text-secondary" />
-                <span className="text-sm">Total lästid</span>
+                <span className="text-sm">{t('profile.totalReadTime')}</span>
               </div>
               <span className="font-semibold">24h 12m</span>
             </div>
@@ -137,7 +137,7 @@ function ProfilePage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Award className="w-5 h-5 text-accent" />
-                <span className="text-sm">Favoritgenre</span>
+                <span className="text-sm">{t('profile.favoriteGenre')}</span>
               </div>
               <span className="font-semibold">Thriller</span>
             </div>
@@ -147,8 +147,8 @@ function ProfilePage() {
         {/* Achievements */}
         <div className="border-t border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">🏆 Prestationer</h3>
-            <span className="text-sm text-text-dim">4/20 upplåsta</span>
+            <h3 className="text-lg font-semibold">🏆 {t('profile.achievements')}</h3>
+            <span className="text-sm text-text-dim">4/20 {t('profile.unlocked')}</span>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
@@ -169,7 +169,7 @@ function ProfilePage() {
 
           <Link href="/achievements">
             <button className="w-full mt-4 text-sm text-primary hover:underline">
-              Visa alla prestationer →
+              {t('profile.viewAll')}
             </button>
           </Link>
         </div>
@@ -181,7 +181,7 @@ function ProfilePage() {
             {userStories.length > 0 && (
               <Link href="/my-stories">
                 <button className="text-sm text-primary hover:underline">
-                  Se alla →
+                  {t('profile.seeAll')}
                 </button>
               </Link>
             )}
@@ -202,10 +202,10 @@ function ProfilePage() {
                           <h4 className="font-semibold mb-1 hover:text-primary transition">{story.title}</h4>
                         </Link>
                         <p className="text-sm text-text-secondary mb-2">
-                          {story.episode_count} episoder • {story.status === 'ongoing' ? 'Pågående' : 'Avslutad'}
+                          {story.episode_count} {t('profile.episodes')} • {story.status === 'ongoing' ? t('profile.ongoing') : t('profile.completed')}
                         </p>
                         <div className="flex items-center gap-4 text-sm text-text-dim">
-                          <span>{story.reads || 0} läsningar</span>
+                          <span>{story.reads || 0} {t('profile.reads')}</span>
                           <span>•</span>
                           <span>❤️ {parseInt(story.love_count as any) || 0}</span>
                         </div>
@@ -220,13 +220,13 @@ function ProfilePage() {
                 ))
               ) : (
                 <p className="text-sm text-text-secondary py-4 text-center">
-                  Du har inte skapat några berättelser än
+                  {t('profile.noStories')}
                 </p>
               )}
 
               <Link href="/create">
                 <button className="w-full py-3 border-2 border-dashed border-border rounded-xl text-sm text-text-secondary hover:border-primary hover:text-primary transition">
-                  + Skapa ny berättelse
+                  {t('profile.createNew')}
                 </button>
               </Link>
             </div>
@@ -237,12 +237,12 @@ function ProfilePage() {
         <div className="border-t border-border p-6 space-y-2">
           <Link href="/settings">
             <button className="w-full text-left py-3 px-4 hover:bg-surface rounded-lg transition">
-              Inställningar
+              {t('profile.settings')}
             </button>
           </Link>
           <Link href="/help">
             <button className="w-full text-left py-3 px-4 hover:bg-surface rounded-lg transition">
-              Hjälp & Support
+              {t('profile.help')}
             </button>
           </Link>
         </div>
